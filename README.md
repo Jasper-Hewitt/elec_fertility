@@ -3,6 +3,8 @@
 wassup
 
 instruction for loading data from github directly into your code:
+The code below downloads the csv file for hou. If you want someone else's data you have to get the raw link. 
+You can get the raw link by going to data -> click the file you need -> click raw in the right top. 
 
          library(readr)
 
