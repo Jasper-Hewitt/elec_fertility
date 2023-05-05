@@ -1,5 +1,7 @@
 # elec_fertility
 
+         search_pattern<-"生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
+ 
 wassup
 
 instruction for loading data from github directly into your code:
