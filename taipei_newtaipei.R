@@ -13,7 +13,34 @@ chen_shihchung<-read.csv('https://raw.githubusercontent.com/Jasper-Hewitt/elec_f
 hou_youyi<-read.csv('https://raw.githubusercontent.com/Jasper-Hewitt/elec_fertility/main/data/newtaipei_hou.csv')
 lin_chialung<-read.csv('https://raw.githubusercontent.com/Jasper-Hewitt/elec_fertility/main/data/newtaipei_lin.csv')
 
+#____________________________________________________________________________________________________________________
+#get rows for manual labelling
+#put into one df and select the proper columns 
+ntp_tp_df <- rbind(huang_shanshan, chiang_wanan, chen_shihchung, hou_youyi, lin_chialung)
+#get colnames
+print(colnames(ntp_tp_df))
+#select relevant columns
+ntp_tp_df <- select(ntp_tp_df, "Page.Name", "Post.Created", "URL", "Link", "Message", "Image.Text", "Link.Text", "Description")
+
+#randomize rows
+ntp_tp_df <- ntp_tp_df[sample(nrow(ntp_tp_df)), ]
+
+#save as xlsx
+write.xlsx(ntp_tp_df, "ntp_tp_df.xlsx")
+
+#____________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
 #fill na in Message column (to prevent errors when we use detect)
+#still check this because there are more columns that might contain the data we need
+#it will have to be an or search I guess
 huang_shanshan$Message[is.na(huang_shanshan$Message)] <- 0
 chiang_wanan$Message[is.na(chiang_wanan$Message)] <- 0
 chen_shihchung$Message[is.na(chen_shihchung$Message)] <- 0
@@ -77,7 +104,6 @@ print(bar_plot)
 
 #______________________________________________________________________________________________________________________________
 #analyse some of the posts. do they really mention 生育率？ or are they using some of the keywords to talk about something else
-
 
 
 
