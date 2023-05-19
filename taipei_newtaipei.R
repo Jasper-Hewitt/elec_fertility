@@ -72,6 +72,22 @@ print(hou_youyi_fc) #4
 print (lin_chialung_fc) #11
 
 
+#bind these all together
+fert_df<-rbind(huang_shanshan, chiang_wanan, chen_shihchung, hou_youyi, lin_chialung)
+
+#keep only the rows where fert_mention=1
+fert_df <- fert_df[fert_df$fert_mention == 1, ]
+
+#select relevant columns
+fert_df <- select(fert_df, "Page.Name", "Post.Created", "URL", "Link", "Message", "Image.Text", "Link.Text", "Description", "fert_mention")
+
+#save as xlsx
+write.xlsx(fert_df, "fertTPNTP_df.xlsx")
+
+
+
+
+
 #__________________________________________________________________________________________________
 #plot results in simple bar plot
 
