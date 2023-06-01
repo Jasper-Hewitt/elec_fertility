@@ -9,7 +9,7 @@ library(stringr)
 library(lubridate)
 
 #convert to txt with pdftools package
-text <- pdf_text("fertnews1.pdf")
+text <- pdf_text("fertnews1MERGED.pdf")
 
 # put everything into one single string. 
 text_combined <- paste(text, collapse = "\n")
@@ -51,4 +51,15 @@ wise_df$dirty_date <- NULL
 #rid of all of the links
 wise_df$content <- stringi::stri_replace_all_regex(wise_df$content, '^[^\\p{Han}]*', "")
 
-print(wise_df$content)
+print(wise_df$content[1])
+
+#to do!
+
+#still select the part after 更多內容 in some of the posts and delete it bc it might contain some titles to other
+#news articles. if those news articles have our key words than the whole article is not about
+#our topic!
+
+#delete rows with empty content column! because these are maybe not that important. 
+
+
+
