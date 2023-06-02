@@ -3,9 +3,7 @@ install.packages("widyr")
 install.packages('wordcloud2')
 library(httr)
 library(widyr)
-
-
-
+library(writexl)
 library(readr)
 library(readxl)
 library(writexl)
@@ -179,20 +177,20 @@ fertsolutions$chatgpt <- fertsolutions_chatgpt$chatgpt
 #imdb_manual_done$chatgpt <- tolower(imdb_manual_done$chatgpt)
 #imdb_manual_done$chatgpt <- gsub(".", "", imdb_manual_done$chatgpt)
 
+# Remove commas and spaces because sometimes gpt adds a comma after the last label sometimes
+fertsolutions <- fertsolutions %>% 
+  mutate(manual_label = str_replace_all(manual_label, "[ ,]", ""),
+         chatgpt = str_replace_all(chatgpt, "[ ,]", ""))
+
 fertsolutions <- fertsolutions %>%
   mutate(check = case_when(manual_label == chatgpt ~ 1,
                            TRUE ~ 0))
 
-sum(fertsolutions$check) / nrow(fertsolutions) #accuracy 0.194
+sum(fertsolutions$check) / nrow(fertsolutions) #accuracy 0.2111
 
 
-
-# Install and load the package
-install.packages("writexl")
-library(writexl)
-
-# Write the dataframe to an Excel file
-write_csv(fertsolutions, "fertsolutions_GPT0.194.csv")
+# save as csv 
+write_csv(fertsolutions, "fertsolutions_GPT0.211.csv")
 
 
 
