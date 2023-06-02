@@ -1,5 +1,14 @@
 # elec_fertility
 
+
+##TO-DO
+- clear up the GPT files (some of them were empty rows, so we have to recalculate the accuracy, also strip the commas and spaces)
+- look into topic modelling? or BERTtopic in python
+
+
+
+
+
          search_pattern<-"少子化｜生育率｜生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
  
 wassup
