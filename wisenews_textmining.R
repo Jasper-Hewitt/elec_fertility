@@ -63,7 +63,7 @@ print(wise_df$content[1])
 
 #get important senteces 
 #we have to make this search pattern bigger so that it also includes sentences containing. 
-#不孕症補助， 0-6歲國家一起養， 拖育, etc. also put these in the custom dict!
+#不孕症補助， 0-6歲國家一起養， 拖育, 幼兒就學補助 etc. also put these in the custom dict!
 search_pattern <- "少子化|生育率|生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
 
 wise_df <- wise_df %>%
