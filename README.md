@@ -6,6 +6,31 @@
 - look into topic modelling? or BERTtopic in python
 
 
+1) Wisenews Analysis
+
+
+
+2) Candidate Post
+
+
+
+
+
+3) Poster 
+
+
+
+
+
+4) Written Report 
+
+
+
+
+
+
+
+
 
 ### snippets
 
