@@ -11,6 +11,7 @@
 - Combine all CSVs (DONE - see master)
 - Preliminary keyword search of different categories of policies to look at frequency mentioned by candidates (in lieu of GPT) (take reference from 選舉公報)
 - Wordcloud analysis (update STOP WORDS and KEYWORDS)
+- Summary of the policies relating to fertility 
 - do the final GPT task just for the sake of completeness (?)
 - look into topic modelling? or BERTtopic in python (?)
 
