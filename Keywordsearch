@@ -1,0 +1,291 @@
+library(readxl)
+library(dplyr)
+library(tidyverse)
+
+library(tidytext)
+library(quanteda)
+library(stringr)
+library(jiebaR)
+library(readtext)
+library(pdftools)
+library(lubridate)
+library(purrr)
+library(wordcloud2)
+library(stringr)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+
+#read the files 
+TP_KMT <- read.csv("TP_KMT.csv")
+TP_DPP <- read.csv("TP_DPP.csv")
+TP_HUANG <- read.csv("TP_HUANG.csv")
+NT_KMT <- read.csv("NT_KMT.csv")
+NT_DPP <- read.csv("NT_DPP.csv")
+TY_KMT <- read.csv("TY_KMT.csv")
+TY_DPP <- read.csv("TY_DPP.csv")
+TY_TPP <- read.csv("TY_TPP.csv")
+TY_LZJ <- read.csv("TY_LZJ.csv")
+TC_KMT <- read.csv("TC_KMT.csv")
+TC_DPP <- read.csv("TC_DPP.csv")
+TN_KMT <- read.csv("TN_KMT.csv")
+TN_DPP <- read.csv("TN_DPP.csv")
+KH_KMT <- read.csv("KH_KMT.csv")
+KH_DPP <- read.csv("KH_DPP.csv")
+
+#create a new column with the City name
+
+TP_KMT$City <- c("TP")
+TP_DPP$City  <- c("TP")
+TP_HUANG$City  <- c("TP")
+NT_KMT$City  <- c("NT")
+NT_DPP$City  <- c("NT")
+TY_KMT$City  <- c("TY")
+TY_DPP$City  <- c("TY")
+TY_TPP$City  <- c("TY")
+TY_LZJ$City  <- c("TY")
+TC_KMT$City  <- c("TC")
+TC_DPP$City  <- c("TC")
+TN_KMT$City <- c("TN")
+TN_DPP$City  <- c("TN")
+KH_KMT$City  <- c("KH")
+KH_DPP$City  <- c("KH")
+
+#create a new column with the Party
+
+TP_KMT$Party <- c("KMT")
+TP_DPP$Party  <- c("DPP")
+TP_HUANG$Party  <- c("IND")
+NT_KMT$Party  <- c("KMT")
+NT_DPP$Party  <- c("DPP")
+TY_KMT$Party  <- c("KMT")
+TY_DPP$Party  <- c("DPP")
+TY_TPP$Party  <- c("TPP")
+TY_LZJ$Party  <- c("DPP")
+TC_KMT$Party  <- c("KMT")
+TC_DPP$Party  <- c("DPP")
+TN_KMT$Party <- c("KMT")
+TN_DPP$Party  <- c("DPP")
+KH_KMT$Party  <- c("KMT")
+KH_DPP$Party  <- c("DPP")
+
+#All of the CSV files have 42 columns except TY_DPP, TY_KMT, TY_TPP, TN_DPP, KH_DPP, KH_DPP  which have 43. The difference is the additional columns 40 "[40] "Total.Interactions..weighted.....Likes.1x.Shares.1x.Comments.1x.Love.1x.Wow.1x.Haha.1x.Sad.1x.Angry.1x.Care.1x.." and 41 "[41] "Overperforming.Score" which is combined into one column in the other CSVs.                                                                                            
+#To align the data,we can remove these column 40 in the CSV with 42 columns; and columns 40 and 41 in the CSV with 43 columns
+
+#First delete column 40 for the CSVs with 42 columns
+TP_KMT <- TP_KMT[,-40]
+TP_DPP <- TP_DPP[,-40]
+TP_HUANG <- TP_HUANG[,-40]
+NT_KMT <- NT_KMT[,-40]
+NT_DPP <- NT_DPP[,-40]
+TY_LZJ <- TY_LZJ[,-40]
+TC_KMT <- TC_KMT[,-40]
+TC_DPP <- TC_DPP[,-40]
+TN_KMT <- TN_KMT[,-40]
+
+#Then delete column 40 and 41 for the CSVs with 43 columns
+TY_DPP <- TY_DPP[,c(-40,-41)]
+TY_KMT <- TY_KMT[,c(-40,-41)]
+TY_TPP <- TY_TPP[,c(-40,-41)]
+TN_DPP <- TN_DPP[,c(-40,-41)]
+KH_KMT <- KH_KMT[,c(-40,-41)]
+KH_DPP <- KH_DPP[,c(-40,-41)]
+
+#merge all the 15 CSVs into one single dataframe
+
+master <- rbind(TP_KMT, TP_DPP,TP_HUANG,NT_KMT,NT_DPP,TY_KMT,TY_DPP,TY_TPP,TY_LZJ,TC_KMT,TC_DPP,TN_KMT,TN_DPP,KH_KMT,KH_DPP)
+
+#you can change the folder name accordingly
+write.csv(master,"/Users/ks/Desktop/RP/master.csv")
+
+##tag 1 0 for the posts that mention any of the keywords in the 5 categories
+
+#Keywords
+
+keywords_Eldercare <- c("銀髮族", "長照", "在地安佬", "在地老化", "不老城", "重陽敬老金", "老人健保", "無障礙公車", "日照", "銀髮樂活", "敬老卡", "高齡運動")
+keywords_Public_Housing <- c("居住正義", "社會住宅", "社宅", "租屋", "青銀共居", "捷運社宅", "台中好宅", "老屋翻新", "包租代管", "囤房特別稅", "社宅")
+keywords_Fertility <- c("公托", "補助托嬰兒", "學前教育", "凍卵", "公幼", "親子中心", "公融式公園", "共融公園", "共融式特色公園", "產檢", "新生兒", "私幼", "第二胎", "年輕爸媽", "生養小孩", "托育", "生養津貼", "收托時間", "托育人員", "坐月子", "產後憂鬱", "在校安親班", "夜托", "臨托")
+keywords_Transport  <-c("鐵路", "鐵路地下化", "Youbike", "YouBike", "捷運", "幸福里程", "通勤", "大眾運輸", "步行", "國道", "客運轉運站", "公車", "交通", "運輸套票", "智慧交通", "機車路權", "軌道捷運", "iBike", "幹道", "輕軌", "台中大環", "閘道", "不塞車", "Tbike", "綠色人行道", "電動公車", "自行車質量", "聯外道路", "人行安全", "行人安全", "人性化路牌", "智慧街道", "四橫三路", "道路壅塞", "外環道路", "鐵路立體化")
+keywords_Economy<- c("智慧城市", "製造業", "產業", "物流", "金融", "科技", "引擎", "醫材", "工業4.0", "數位升級", "智慧升級", "創業", "數位新科技", "在地工作", "產業帶", "轉型", "新創轉型", "都心發展", "機能區", "藍色經濟圈", "海洋經濟", "海空雙港", "低碳產業", "產業高值化", "觀光", "旅客", "旅行社", "商圈", "招商引資", "拼經濟", "產業園區", "中科2.0", "新苗計劃", "創業孵化器", "航空城", "產學訓用", "青創基地", "高科技產業", "優質就業", "國際廠商", "高階製造中心", "特色")
+
+#Tag as 1 if any of the words appaer in the messages, otherwise 0.
+master$Eldercare <- ifelse(grepl(paste(keywords_Eldercare, collapse = "|"), master$Message), 1, 0)
+master$Public_Housing <- ifelse(grepl(paste(keywords_Public_Housing, collapse = "|"), master$Message), 1, 0)
+master$Fertility <- ifelse(grepl(paste(keywords_Fertility, collapse = "|"), master$Message), 1, 0)
+master$Transport <- ifelse(grepl(paste(keywords_Transport, collapse = "|"), master$Message), 1, 0)
+master$Economy <- ifelse(grepl(paste(keywords_Economy, collapse = "|"), master$Message), 1, 0)
+
+print(sum(master$Eldercare==1))
+print(sum(master$Public_Housing==1))
+print(sum(master$Fertility==1))
+print(sum(master$Transport==1))
+print(sum(master$Economy==1))
+
+#Create new dataframe with the 5 columns
+# Create a new data frame with column sums
+Overall_post <- data.frame(
+  Eldercare = sum(master$Eldercare),
+  Public_Housing = sum(master$Public_Housing),
+  Fertility = sum(master$Fertility),
+  Transport = sum(master$Transport),
+  Economy = sum(master$Economy)
+)
+
+Overall_post<- Overall_post %>%
+  gather(key = "Category", value = "Number_of_Posts") 
+
+Overall_post <- Overall_post %>%
+  arrange(desc(Number_of_Posts))
+
+
+Overall_post <- Overall_post[order(-Overall_post$Number_of_Posts), ]
+
+ggplot(Overall_post, aes(x = Number_of_Posts, y = reorder(Category, Number_of_Posts), fill = Category)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Number of Posts", y = "Category", title = "Number of Posts by Category") +
+  theme_minimal() +
+  guides(fill = "none")  
+
+
+
+
+##FILTER BY PARTY (KMT VS DPP VS OTHERS)
+
+master_byparty_KMT <- master %>%
+  filter(Party=="KMT") 
+
+master_byparty_DPP <- master %>%
+  filter(Party=="DPP")
+
+Overall_post_KMT <- data.frame(
+  Eldercare = sum(master_byparty_KMT$Eldercare),
+  Public_Housing = sum(master_byparty_KMT$Public_Housing),
+  Fertility = sum(master_byparty_KMT$Fertility),
+  Transport = sum(master_byparty_KMT$Transport),
+  Economy = sum(master_byparty_KMT$Economy)
+)
+  
+Overall_post_DPP <- data.frame(
+  Eldercare = sum(master_byparty_DPP$Eldercare),
+  Public_Housing = sum(master_byparty_DPP$Public_Housing),
+  Fertility = sum(master_byparty_DPP$Fertility),
+  Transport = sum(master_byparty_DPP$Transport),
+  Economy = sum(master_byparty_DPP$Economy)
+)
+
+
+Overall_post_KMT_table<- Overall_post_KMT %>%
+  gather(key = "Category", value = "Number_of_Posts") 
+
+Overall_post_DPP_table<- Overall_post_DPP %>%
+  gather(key = "Category", value = "Number_of_Posts") 
+
+Overall_post_Party_Table <- left_join(Overall_post_KMT_table,Overall_post_DPP_table,by="Category")
+
+colnames(Overall_post_Party_Table)[2:3] <- c("KMT","DPP")
+
+Overall_post_Party_Table <- Overall_post_Party_Table %>%
+  gather("Party","Number_of_Post",2:3)
+
+ggplot(Overall_post_Party_Table,aes(x=Party,y=Number_of_Post,color=Category,group=Category)) +geom_bar()
+
+
+ggplot(Overall_post_Party_Table, aes(x = Category, y = Number_of_Post, fill = Party)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(x = "Number of Posts", y = "Category", title = "Number of Posts by Party") +
+  theme_minimal()
+
+##FILTER BY CITY
+
+
+master_bycity_TP <- master %>%
+  filter(City=="TP") 
+
+master_bycity_NT <- master %>%
+  filter(City=="NT")
+
+master_bycity_TY <- master %>%
+  filter(City=="TY") 
+
+master_bycity_TC <- master %>%
+  filter(City=="TC")
+
+master_bycity_TN <- master %>%
+  filter(City=="TN")
+
+master_bycity_KH <- master %>%
+  filter(City=="KH")
+
+#individual city table
+Overall_post_TP<- data.frame(
+  Eldercare = sum(master_bycity_TP$Eldercare),
+  Public_Housing = sum(master_bycity_TP$Public_Housing),
+  Fertility = sum(master_bycity_TP$Fertility),
+  Transport = sum(master_bycity_TP$Transport),
+  Economy = sum(master_bycity_TP$Economy)
+)
+
+
+Overall_post_NT<- data.frame(
+  Eldercare = sum(master_bycity_NT$Eldercare),
+  Public_Housing = sum(master_bycity_NT$Public_Housing),
+  Fertility = sum(master_bycity_NT$Fertility),
+  Transport = sum(master_bycity_NT$Transport),
+  Economy = sum(master_bycity_NT$Economy)
+)
+
+
+Overall_post_TY<- data.frame(
+  Eldercare = sum(master_bycity_TY$Eldercare),
+  Public_Housing = sum(master_bycity_TY$Public_Housing),
+  Fertility = sum(master_bycity_TY$Fertility),
+  Transport = sum(master_bycity_TY$Transport),
+  Economy = sum(master_bycity_TY$Economy)
+)
+
+Overall_post_TC<- data.frame(
+  Eldercare = sum(master_bycity_TC$Eldercare),
+  Public_Housing = sum(master_bycity_TC$Public_Housing),
+  Fertility = sum(master_bycity_TC$Fertility),
+  Transport = sum(master_bycity_TC$Transport),
+  Economy = sum(master_bycity_TC$Economy)
+)
+
+Overall_post_TN<- data.frame(
+  Eldercare = sum(master_bycity_TN$Eldercare),
+  Public_Housing = sum(master_bycity_TN$Public_Housing),
+  Fertility = sum(master_bycity_TN$Fertility),
+  Transport = sum(master_bycity_TN$Transport),
+  Economy = sum(master_bycity_TN$Economy)
+)
+
+Overall_post_KH<- data.frame(
+  Eldercare = sum(master_bycity_KH$Eldercare),
+  Public_Housing = sum(master_bycity_KH$Public_Housing),
+  Fertility = sum(master_bycity_KH$Fertility),
+  Transport = sum(master_bycity_KH$Transport),
+  Economy = sum(master_bycity_KH$Economy)
+)
+
+#rename row name
+rownames(Overall_post_TP) <- "TP"
+rownames(Overall_post_NT) <- "NT"
+rownames(Overall_post_TY) <- "TY"
+rownames(Overall_post_TC) <- "TC"
+rownames(Overall_post_TN) <- "TN"
+rownames(Overall_post_KH) <- "KH"
+
+#rbind
+Overall_post_by_city <- rbind(Overall_post_TP,Overall_post_NT,Overall_post_TY,Overall_post_TC,Overall_post_TN,Overall_post_KH)
+
+Overall_post_by_city <- t(Overall_post_by_city)
+
+#Category <- c("Eldercare","Public_Housing","Fertility","Transport","Economy")
+
+
+#Overall_post_by_city <- cbind(Category,Overall_post_by_city)
+
+
+
+
