@@ -114,9 +114,9 @@ master <- rbind(TP_KMT, TP_DPP,TP_HUANG,NT_KMT,NT_DPP,TY_KMT,TY_DPP,TY_TPP,TY_LZ
 #you can change the folder name accordingly
 write.csv(master,"/Users/ks/Desktop/RP/master.csv")
 
-##tag 1 0 for the posts that mention any of the keywords in the 5 categories
+#tag 1 0 for the posts that mention any of the keywords in the 5 categories - keywords are referenced from the 選舉公報
 
-#Keywords
+##Keywords
 
 keywords_Eldercare <- c("銀髮族", "長照", "在地安佬", "在地老化", "不老城", "重陽敬老金", "老人健保", "無障礙公車", "日照", "銀髮樂活", "敬老卡", "高齡運動")
 keywords_Public_Housing <- c("居住正義", "社會住宅", "社宅", "租屋", "青銀共居", "捷運社宅", "台中好宅", "老屋翻新", "包租代管", "囤房特別稅", "社宅")
@@ -203,13 +203,16 @@ colnames(Overall_post_Party_Table)[2:3] <- c("KMT","DPP")
 Overall_post_Party_Table <- Overall_post_Party_Table %>%
   gather("Party","Number_of_Post",2:3)
 
-ggplot(Overall_post_Party_Table,aes(x=Party,y=Number_of_Post,color=Category,group=Category)) +geom_bar()
+
 
 
 ggplot(Overall_post_Party_Table, aes(x = Category, y = Number_of_Post, fill = Party)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(x = "Number of Posts", y = "Category", title = "Number of Posts by Party") +
   theme_minimal()
+
+
+
 
 ##FILTER BY CITY
 
@@ -346,10 +349,12 @@ fertility_posts_bydate <- fertility_posts %>%
 ggplot(fertility_posts_bydate, aes(x=Date_cleaned, y=post)) + geom_line()
 
 
-#double check what are the posts on 2022-11-05 which showed a peak. 
+#double check what are the posts on 2022-11-05 and 2022-11-12which showed a peak. 
 a <- fertility_posts%>%
   filter(Date_cleaned=="2022-11-05") 
 
+aa <- fertility_posts%>%
+  filter(Date_cleaned=="2022-11-12") 
 
 
 ##Calculate the average policy post per candidate
@@ -378,13 +383,11 @@ master_policy_mention_combined <- master_policy_mention_combined %>%
 #you need this to show the chinese text
 showtext_auto()
 
-
-
-
 #randomise colours
 num_colors <- length(unique(master_policy_mention_combined$Candidate))
 colors <- sample(colors(), num_colors)
 
+#Bar plot showing the average daily post with policy mention per candate - arranged in descending order
 ggplot(master_policy_mention_combined, aes(x = reorder(Candidate, Averagedailypost), y = Averagedailypost, fill = Candidate)) +
   geom_bar(stat = "identity", color = "black", size = 0.2) +
   labs(x = "Candidate", y = "Average Daily Posts", title = "Average Daily Post with Policy Mention") +
@@ -393,8 +396,143 @@ ggplot(master_policy_mention_combined, aes(x = reorder(Candidate, Averagedailypo
   scale_fill_manual(values = colors)
 
 
-#Policy Mention by party
-master_policy_me
+##focus on policy post trends --- no obvious trends in most candidates except for Huang Shanshan and Chen Shih Chung and Hou which peaked during the policy debate.
+
+
+#master$Date_cleaned <- substr(master$Post.Created,1,10)
+#master$Date_cleaned <- as.Date(master$Date_cleaned)
+
+#TPE [Huang; Chen spiked during the 11/5 debate; Chiang no]
+TP_HUANG_period <- master %>%
+  filter(Page.Name=="黃珊珊") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TP_HUANG_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TP_DPP_period <- master %>%
+  filter(Page.Name=="陳時中") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TP_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TP_KMT_period <- master %>%
+  filter(Page.Name=="蔣萬安") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TP_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+#NT [Hou peaked during the 11/14 debate; Lin didn't)]
+
+NT_DPP_period <- master %>%
+  filter(Page.Name=="林佳龍") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(NT_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+NT_KMT_period <- master %>%
+  filter(Page.Name=="侯友宜") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(NT_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+
+#TY 
+
+TY_DPP_period <- master %>%
+  filter(Page.Name=="鄭運鵬") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TY_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TY_KMT_period <- master %>%
+  filter(Page.Name=="張善政") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TY_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TY_TPP_period <- master %>%
+  filter(Page.Name=="賴香伶") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TY_TPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+#TC 
+
+TC_DPP_period <- master %>%
+  filter(Page.Name=="蔡其昌") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TC_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TC_KMT_period <- master %>%
+  filter(Page.Name=="盧秀燕") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TC_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+#TN [Hou peaked during the 11/14 debate; Lin didn't)]
+
+TN_DPP_period <- master %>%
+  filter(Page.Name=="黃偉哲") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TN_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+TN_KMT_period <- master %>%
+  filter(Page.Name=="謝龍介") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(TN_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+#KH 
+#CHEN QI MAI code does not run if i choose the chinese name column so i used user.name column instead
+
+KH_DPP_period <- master %>%
+  filter(User.Name=="chenchimai") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(KH_DPP_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+KH_KMT_period <- master %>%
+  filter(Page.Name=="柯志恩") %>%
+  filter(policy_mention==1) %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+ggplot(KH_KMT_period, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+
 
 
 
