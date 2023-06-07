@@ -15,7 +15,20 @@ library(stringr)
 library(ggplot2)
 library(tidyr)
 library(dplyr)
+library(extrafont)
+install.packages("extrafont")
 
+library(extrafont)
+font_import()
+
+library(rvest)
+library(xml2)
+library(tidyverse)
+library(tidytext)
+library(knitr)
+
+install.packages("showtext")
+library(showtext)
 
 #read the files 
 TP_KMT <- read.csv("TP_KMT.csv")
@@ -33,6 +46,8 @@ TN_KMT <- read.csv("TN_KMT.csv")
 TN_DPP <- read.csv("TN_DPP.csv")
 KH_KMT <- read.csv("KH_KMT.csv")
 KH_DPP <- read.csv("KH_DPP.csv")
+
+
 
 #create a new column with the City name
 
@@ -225,7 +240,8 @@ Overall_post_TP<- data.frame(
   Transport = sum(master_bycity_TP$Transport),
   Economy = sum(master_bycity_TP$Economy)
 )
-
+#cTP <- c("TP")
+#Overall_post_TP<- cbind(cTP,Overall_post_TP)
 
 Overall_post_NT<- data.frame(
   Eldercare = sum(master_bycity_NT$Eldercare),
@@ -234,7 +250,8 @@ Overall_post_NT<- data.frame(
   Transport = sum(master_bycity_NT$Transport),
   Economy = sum(master_bycity_NT$Economy)
 )
-
+#cNT <- c("NT")
+#Overall_post_NT<- cbind(cNT,Overall_post_NT)
 
 Overall_post_TY<- data.frame(
   Eldercare = sum(master_bycity_TY$Eldercare),
@@ -243,6 +260,8 @@ Overall_post_TY<- data.frame(
   Transport = sum(master_bycity_TY$Transport),
   Economy = sum(master_bycity_TY$Economy)
 )
+#cTY <- c("TY")
+#Overall_post_TY<- cbind(cTY,Overall_post_TY)
 
 Overall_post_TC<- data.frame(
   Eldercare = sum(master_bycity_TC$Eldercare),
@@ -251,6 +270,8 @@ Overall_post_TC<- data.frame(
   Transport = sum(master_bycity_TC$Transport),
   Economy = sum(master_bycity_TC$Economy)
 )
+#cTC <- c("TC")
+#Overall_post_TC<- cbind(cTC,Overall_post_TC)
 
 Overall_post_TN<- data.frame(
   Eldercare = sum(master_bycity_TN$Eldercare),
@@ -259,6 +280,8 @@ Overall_post_TN<- data.frame(
   Transport = sum(master_bycity_TN$Transport),
   Economy = sum(master_bycity_TN$Economy)
 )
+#cTN <- c("TN")
+#Overall_post_TN<- cbind(cTN,Overall_post_TN)
 
 Overall_post_KH<- data.frame(
   Eldercare = sum(master_bycity_KH$Eldercare),
@@ -267,19 +290,118 @@ Overall_post_KH<- data.frame(
   Transport = sum(master_bycity_KH$Transport),
   Economy = sum(master_bycity_KH$Economy)
 )
-
-#rename row name
-rownames(Overall_post_TP) <- "TP"
-rownames(Overall_post_NT) <- "NT"
-rownames(Overall_post_TY) <- "TY"
-rownames(Overall_post_TC) <- "TC"
-rownames(Overall_post_TN) <- "TN"
-rownames(Overall_post_KH) <- "KH"
+#cKH <- c("KH")
+#Overall_post_KH<- cbind(cKH,Overall_post_KH)
 
 #rbind
-Overall_post_by_city <- rbind(Overall_post_TP,Overall_post_NT,Overall_post_TY,Overall_post_TC,Overall_post_TN,Overall_post_KH)
+Overall_post_by_city <-  rbind(Overall_post_TP,Overall_post_NT,Overall_post_TY,Overall_post_TC,Overall_post_TN,Overall_post_KH)
+
 
 Overall_post_by_city <- t(Overall_post_by_city)
+colnames(Overall_post_by_city)<- c("TP","NT","TY","TC","TN","KH")
+
+
+
+Category <- data.frame(Column=c("Eldercare","Public_Housing","Fertility","Transport","Economy"))
+
+Overall_post_by_city<- cbind(Category,Overall_post_by_city)
+
+Overall_post_by_city<- Overall_post_by_city %>%
+  gather("Category","Post_by_City",2:7)
+         
+colnames(Overall_post_by_city)[1:3]<- c("Category","City","Post_by_city")
+
+#ggplot(Overall_post_by_city,aes(x="City",y="Post_by_city",color=Category,group=Category)) +geom_bar()
+
+
+ggplot(Overall_post_by_city, aes(x = Category, y = Post_by_city, fill = City)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(x = "Category", y = "Number of Posts", title = "Number of Posts by City") +
+  theme_minimal()
+
+ggplot(Overall_post_by_city, aes(x = City, y = Post_by_city, fill = Category)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(x = "City", y = "Number of Posts", title = "Number of Posts by City") +
+  theme_minimal()
+
+
+
+
+##PLOT BY PERIOD
+
+#note 盧秀燕 and 蔡其昌 dates in the Post.created.date column is in '/'. So we instead cut from the Post.created column instead.
+
+
+master$Date_cleaned <- substr(master$Post.Created,1,10)
+master$Date_cleaned <- as.Date(master$Date_cleaned)
+
+fertility_posts <- master %>%
+  filter(Fertility==1)
+
+fertility_posts_bydate <- fertility_posts %>%
+  group_by(Date_cleaned) %>%
+  summarise(post=n())
+
+
+ggplot(fertility_posts_bydate, aes(x=Date_cleaned, y=post)) + geom_line()
+
+
+#double check what are the posts on 2022-11-05 which showed a peak. 
+a <- fertility_posts%>%
+  filter(Date_cleaned=="2022-11-05") 
+
+
+
+##Calculate the average policy post per candidate
+
+master$policy_mention <- as.integer(rowSums(master[,c("Eldercare","Public_Housing","Fertility","Transport","Economy")])>0) 
+
+master_policy_mention <- master %>%
+  filter(policy_mention==1) %>%
+  group_by(Page.Name) %>%
+  summarise(number_of_post=n())
+
+city<- c(column="NT","TY","NT","TY","KH","TC","TC","TP","TN","TY","TY","TP","TN","TP")
+
+colnames(master_policy_mention)[1] <- "Candidate"
+
+election_period <- read.csv("Electiondate.csv")
+
+master_policy_mention_combined<- merge(master_policy_mention,election_period, by="Candidate")
+
+master_policy_mention_combined <- master_policy_mention_combined %>%
+  mutate(Averagedailypost = number_of_post/Number.of.Dats)
+
+master_policy_mention_combined <- master_policy_mention_combined %>%
+  arrange(desc(master_policy_mention_combined$Averagedailypost))
+
+#you need this to show the chinese text
+showtext_auto()
+
+
+
+
+#randomise colours
+num_colors <- length(unique(master_policy_mention_combined$Candidate))
+colors <- sample(colors(), num_colors)
+
+ggplot(master_policy_mention_combined, aes(x = reorder(Candidate, Averagedailypost), y = Averagedailypost, fill = Candidate)) +
+  geom_bar(stat = "identity", color = "black", size = 0.2) +
+  labs(x = "Candidate", y = "Average Daily Posts", title = "Average Daily Post with Policy Mention") +
+  coord_flip() +
+  theme(axis.text.y = element_text(hjust = 1)) +
+  scale_fill_manual(values = colors)
+
+
+#Policy Mention by party
+master_policy_me
+
+
+
+
+
+
+#City_name <- data.frame(City = c("TP", "NT", "TY", "TC", "TN", "KH"))
 
 #Category <- c("Eldercare","Public_Housing","Fertility","Transport","Economy")
 
