@@ -13,7 +13,7 @@ library(wordcloud2)
 #PART 1: DATA CLEANING 
 
 #convert to txt with pdftools package
-text <- pdf_text("fertnews1MERGED.pdf")
+text <- pdf_text("wisenews_fertility.pdf")
 
 # put everything into one single string. 
 text_combined <- paste(text, collapse = "\n")
@@ -61,9 +61,9 @@ wise_df$content <- gsub("\n", "", wise_df$content)
 
 print(wise_df$content[1])
 
-#get important senteces 
-#we have to make this search pattern bigger so that it also includes sentences containing. 
-#不孕症補助， 0-6歲國家一起養， 拖育, 幼兒就學補助, 敢生 etc. also put these in the custom dict!
+#to do!
+
+
 search_pattern <- "少子化|生育率|生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
 
 wise_df <- wise_df %>%
@@ -73,17 +73,15 @@ wise_df <- wise_df %>%
   #unnest the columns, so each important sentence will get their own row. just like 'explode in pandas' 
   unnest(important_sentences)
 
-#delete rows with empty content column! because these are maybe not that important. 
-
-print(wise_df$important_sentences)
-print(class(wise_df$important_sentences))
-print(class(wise_df$content))
-
-#prepare dataframe for later plots
-wise_df <- wise_df %>% 
-  rename(text = content)%>% 
-  filter(!str_detect(text,"^\\s*$"))%>% #remove empty docs
+#Turn this off if you run the optional lines below
+wise_df <- wise_df %>%
   mutate(doc_id = row_number())
+
+#OPTIONAL prepare dataframe for later plots
+#wise_df <- wise_df %>% 
+#  rename(text = content)%>% 
+#  filter(!str_detect(text,"^\\s*$"))%>% #remove empty docs
+#  mutate(doc_id = row_number())
 
 #________________________________________________________________________________________________________________________
 
@@ -105,7 +103,7 @@ wise_word <- wise_df %>%
   ## word tokenization
   unnest_tokens(
     output = word,
-    input = important_sentences,  # the name of the column we are plotting
+    input = content,  # the name of the column we are plotting
     token = function(x)
       segment(x, jiebar = my_seg)
   ) %>%
@@ -124,8 +122,8 @@ custom_stopwords <- c("經濟", "科技", "報導", "可能", "指出", "認為"
                       "應該", "可能", "提出", "過去", "現在", "進行","今天", "相關", "社會",
                       "議題", "很多", "undo", "需要", "需求", "已經", "目前", "今年", "透過",
                       "地方", "沒有", "記者", "成為", "持續", "市場", "表示", "台灣", "造成",
-                      "不少", "原因", "影響", 
-                      "少子化", "台北", "生育率", "問題", "育兒", "生育")  # specific words about 生育率
+                      "不少", "原因", "影響", "人口",
+                      "台北", "生育率", "問題", "育兒", "生育", "少子化")  # specific words about 生育率
 stopwords_chi <- c(stopwords_chi, custom_stopwords)
 
 
@@ -141,9 +139,10 @@ wise_word_freq <- wise_word %>%
 #we could also consider to just keep in certain words. and go from there!
 #like we just select a bunch of keywords that we think are worth discussing and then we only run a word cloud with that?
 wise_word_freq %>%
-  filter(n > 100) %>%
+  filter(n > 1000) %>%
   filter(nchar(word) >= 2) %>% ## remove monosyllabic tokens
   wordcloud2(shape = "circle", size = 0.4)
+
 
 
 
@@ -153,7 +152,7 @@ wise_word_freq %>%
 #already has split the sentences into different rows. 
 #plotting the whole text does not lead to very informative results because there are too many unrelated words
 
-#CHUNK_DELIMITER <- "[，。！？]+"
+CHUNK_DELIMITER <- "[，。！？]+"
 ## Tokenization: lines > words
 #wise_line <- wise_df %>%
 ## line tokenization
@@ -186,14 +185,47 @@ wise_word_freq %>%
 
 
 
+#part 3: word associations network! this part doesn't work yet!Maybe we should first get the 
+#DELETE THIS PART IT DOESN'T WORK LOL!!
+
+# Load required libraries
+install.packages("qdap")
+library(qdap)
+
+# Word association
+png(filename="your_plot.png", width=800, height=800)
+word_associate(wise_df$important_sentences, match.string = "少子化", 
+               stopwords = stopwords_chi, 
+               network.plot = TRUE)
+dev.off()
+# Add title
+title(main = "Associations with '少子化'")
+
+print(wise_df$important_sentences)
 
 
+# Sentence Tokenization
+wise_sentence <- wise_df %>%
+  unnest_tokens(
+    output = sentence,
+    input = important_sentences,
+    token = function (x)
+      str_split(x, CHUNK_DELIMITER)
+  ) %>%
+  group_by(doc_id) %>%
+  mutate(sentence_id = row_number()) %>%
+  ungroup
 
+# Removing stop words
+wise_sentence <- wise_sentence %>%
+  filter(!sentence %in% stopwords_chi)
 
+# Assuming word_associate works on this format
 
-
-
-
+word_associate(wise_sentence$sentence, match.string = "少子化", 
+               stopwords = stopwords_chi, 
+               network.plot = TRUE)
+dev.off()
 
 
 
