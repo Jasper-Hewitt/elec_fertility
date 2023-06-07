@@ -7,23 +7,24 @@
 
 
 1) Wisenews Analysis
-
+- Wordcloud analysis to identify key topics
 
 
 2) Candidate Post
-
+- Combine all CSVs (DONE - see master)
+- Preliminary keyword search of different categories of policies to look at frequency mentioned by candidates (in lieu of GPT) (take reference from 選舉公報)
+- Wordcloud analysis (update STOP WORDS and KEYWORDS)
 
 
 
 
 3) Poster 
-
-
-
+- Complete first cut draft by Fri 6/9
+- Send for printing on Mon 6/12
 
 
 4) Written Report 
-
+- By 6/22 (?)
 
 
 
