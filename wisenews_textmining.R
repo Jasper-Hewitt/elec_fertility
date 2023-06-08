@@ -9,6 +9,7 @@ library(pdftools)
 library(lubridate)
 library(purrr)
 library(wordcloud2)
+library(lubridate)
 
 #PART 1: DATA CLEANING 
 
@@ -38,50 +39,78 @@ wise_df <- wise_df[-nrow(wise_df), ]
 pattern <- "\\|.*\\n網站"
 wise_df$date <- str_extract(wise_df$dirty_date, pattern)
 
-# delete the parts that we don't need
+# delete additional characters from the date column 
 wise_df$date <- str_replace_all(wise_df$date, "\\| ", "")
 wise_df$date <- str_replace_all(wise_df$date, "\n網站", "")
+# Convert the date column to a format that R can read with lubridate 
+wise_df$date <- ymd_hm(wise_df$date)
 
-# delete everything before '文字快照'. 
+# clean content column 
+#delete everything before '文字快照'. 
 wise_df$content <- sub(".*文字快照", "", wise_df$dirty_content)
 
-#delete the column we no longer need
-wise_df$dirty_content <- NULL
-wise_df$dirty_date <- NULL
-
-#this works: using a regular regex here does not really work because the links have several different formats
 #Since all of the rows now start with a link, and are then followed by a news article in Chinese
 #the following code uses the stringi package to delete all the non-han characters at the start of each row. This effectively gets
 #rid of all of the links
 wise_df$content <- stringi::stri_replace_all_regex(wise_df$content, '^[^\\p{Han}]*', "")
 
+# delete the compressed posts. these are the posts that end with . . . AND have fewer than 200 characters.
+#some posts have . . . but are not actually compressed, so we have to leave those in. 
+wise_df <- wise_df[!(str_detect(wise_df$content, "\\.\\.\\.$") & nchar(wise_df$content) < 200), ]
+
 #delete newline symbols
 wise_df$content <- gsub("\n", "", wise_df$content)
 
 
+
+#delete the column we no longer need
+wise_df$dirty_content <- NULL
+wise_df$dirty_date <- NULL
+
+
 print(wise_df$content[1])
 
-#to do!
+#OPTIONAL, get important_sentences to plot just those
 
+#search_pattern <- "少子化|生育率|生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
 
-search_pattern <- "少子化|生育率|生育|生孩子|孕育|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托|產檢|孕"
-
-wise_df <- wise_df %>%
-  mutate(important_sentences = str_split(content, "[。？！]")) %>% #split it into sentences
+#wise_df <- wise_df %>%
+#  mutate(important_sentences = str_split(content, "[。？！]")) %>% #split it into sentences
   #find the sentences that contain some of our keywords, and paste that sentences into the important_sentences column
-  mutate(important_sentences = map(important_sentences, ~ .[str_detect(., regex(search_pattern, ignore_case = TRUE))])) %>%
+#  mutate(important_sentences = map(important_sentences, ~ .[str_detect(., regex(search_pattern, ignore_case = TRUE))])) %>%
   #unnest the columns, so each important sentence will get their own row. just like 'explode in pandas' 
-  unnest(important_sentences)
+#  unnest(important_sentences)
 
-#Turn this off if you run the optional lines below
-wise_df <- wise_df %>%
-  mutate(doc_id = row_number())
 
 #OPTIONAL prepare dataframe for later plots
-#wise_df <- wise_df %>% 
-#  rename(text = content)%>% 
-#  filter(!str_detect(text,"^\\s*$"))%>% #remove empty docs
-#  mutate(doc_id = row_number())
+wise_df <- wise_df %>% 
+  filter(str_length(content) >= 3)%>% #remove empty docs, docs with less than 3 characters
+  mutate(doc_id = row_number())
+
+#check rows that were compressed
+new_df <- wise_df[nchar(wise_df$content) >200, ]
+print(new_df$content[5])
+
+
+#_______________________________________________________________________________________________________________
+#plot newsarticles over time 
+#create new column with only the dates. remove everything after the first space 
+wise_df$dateplot <- str_replace(wise_df$date, " .*", "")
+
+#get counts per date
+wise_df_timeplot <- wise_df %>%
+  group_by(dateplot) %>%
+  summarise(count = n())
+
+
+
+#beautiful plot with ggplot
+ggplot(wise_df_timeplot, aes(x=dateplot, y=count)) + 
+  geom_line(colour = "purple") +
+  labs(title = "Daily articles about population ageing", x = "Date", y = "Count") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") + #set date per month instead of day
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkblue"))
 
 #________________________________________________________________________________________________________________________
 
@@ -103,7 +132,7 @@ wise_word <- wise_df %>%
   ## word tokenization
   unnest_tokens(
     output = word,
-    input = content,  # the name of the column we are plotting
+    input = important_sentences,  # the name of the column we are plotting
     token = function(x)
       segment(x, jiebar = my_seg)
   ) %>%
@@ -139,7 +168,7 @@ wise_word_freq <- wise_word %>%
 #we could also consider to just keep in certain words. and go from there!
 #like we just select a bunch of keywords that we think are worth discussing and then we only run a word cloud with that?
 wise_word_freq %>%
-  filter(n > 1000) %>%
+  filter(n > 200) %>%
   filter(nchar(word) >= 2) %>% ## remove monosyllabic tokens
   wordcloud2(shape = "circle", size = 0.4)
 
