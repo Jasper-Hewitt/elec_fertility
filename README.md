@@ -1,6 +1,8 @@
 # elec_fertility
 
 
+main doc: https://docs.google.com/document/d/18kQVusbmW53OZeb1G9uWIwLzbALJsUUTlVkBPKkpV6o/edit
+
 ### TO-DO
 1) Wisenews Analysis
 - Download all articles with keyword from 2022/02/11 - 2022/11/27 
