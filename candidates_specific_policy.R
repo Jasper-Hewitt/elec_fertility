@@ -108,13 +108,13 @@ l_by_party<-by_party%>%
 color <- c("DPP" = "green", "KMT" = "blue", "TPP" = "red", "IND" = "gray")
 
 # plot
-ggplot(l_by_party, aes(x = label, y = sum, fill = Party)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  scale_fill_manual(values = color) +
-  theme_minimal() +
-  labs(x = "Party", y = "Sum", fill = "Party") +
-  theme_minimal() +
-  theme(text = element_text(family = "Songti SC"))
+#ggplot(l_by_party, aes(x = label, y = sum, fill = Party)) +
+#  geom_bar(stat = "identity", position = "dodge") +
+#  scale_fill_manual(values = color) +
+#  theme_minimal() +
+#  labs(x = "Party", y = "Sum", fill = "Party") +
+#  theme_minimal() +
+#  theme(text = element_text(family = "Songti SC"))
 
 # plot, all parties grouped together
 ggplot(l_by_party, aes(x = Party, y = sum, fill = label)) + 
@@ -163,4 +163,54 @@ ggplot(l_by_party, aes(x = Party, y = percentage, fill = label)) +
   labs(x = "Party", y = "Percentage", fill = "Label") +
   theme_minimal() +
   theme(text = element_text(family = "Songti SC"))
+
+#___________#__________### plot city vs city ####___________#__________# 
+
+
+#group by party 
+by_city <- master_fert_df%>%
+  group_by(City)%>%
+  summarise(教保公共普及化 = sum(教保公共普及化),
+            友善職場 = sum(友善職場),
+            經濟支持 = sum(經濟支持)
+  )
+
+l_by_city<-by_city%>%
+  gather('label', 'sum', 2:4)
+
+
+# plot
+#ggplot(l_by_party, aes(x = label, y = sum, fill = Party)) +
+#  geom_bar(stat = "identity", position = "dodge") +
+#  scale_fill_manual(values = color) +
+#  theme_minimal() +
+#  labs(x = "Party", y = "Sum", fill = "Party") +
+#  theme_minimal() +
+#  theme(text = element_text(family = "Songti SC"))
+
+# plot, all cities grouped together
+ggplot(l_by_city, aes(x = City, y = sum, fill = label)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("教保公共普及化" = "purple", "友善職場" = "orange", "經濟支持" = "skyblue")) +
+  theme_minimal() +
+  labs(x = "City", y = "Sum", fill = "Label") +
+  theme_minimal() +
+  theme(text = element_text(family = "Songti SC"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
