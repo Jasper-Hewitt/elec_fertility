@@ -84,9 +84,6 @@ my_seg <- worker(bylines = T,
                  user = "customdict.txt",
                  symbol = T)
 
-##Add customized terms if necessary
-#temp_new_words <-c("九合一選舉", "蔣萬安", "黃珊珊", "陳時中")
-#new_user_word(my_seg, temp_new_words)
 
 
 master_fert_word <- master_fert_df %>%
@@ -103,23 +100,30 @@ master_fert_word <- master_fert_df %>%
 
 
 
-#if you want to add some custom keywords, we can use this.We want to take out some basic words like 
-#少子化 and 生育率, because they are not very informative 
-#custom_stopwords <- c("經濟", "科技", "報導", "可能", "指出", "認為", "新聞網", "國際", 
-#                      "應該", "可能", "提出", "過去", "現在", "進行","今天", "相關", "社會",
-#                      "議題", "很多", "undo", "需要", "需求", "已經", "目前", "今年", "透過",
-#                      "地方", "沒有", "記者", "成為", "持續", "市場", "表示", "台灣", "造成",
-#                      "不少", "原因", "影響", 
-#                      "少子化", "台北", "生育率", "問題", "育兒", "生育")  # specific words about 生育率
-custom_stopwords<-""
-stopwords <- c(stopwords, custom_stopwords)
+#same custom stopwords as we use for the wisenews wordcloud
+custom_stopwords <- c("經濟", "科技", "報導", "可能", "指出", "認為", "新聞網", "國際", 
+                      "應該", "可能", "提出", "過去", "現在", "進行","今天", "相關", "社會",
+                      "議題", "很多", "undo", "需要", "需求", "已經", "目前", "今年", "透過",
+                      "地方", "沒有", "記者", "成為", "持續", "市場", "表示", "台灣", "造成",
+                      "不少", "原因", "影響", "人口","台北", "生育率", "問題", "育兒", "生育", 
+                      "少子化", "/", "10", "20", "30", "一起", "桃園", "台中", "市長", "市民",
+                      "城市", "12", "11", "高雄", "https", "台北市", "台中市", "台南市", "高雄市", "台南")  # specific words about 生育率# specific words about 生育率
+stopwords_chi <- c(stopwords_chi, custom_stopwords)
 
 
 
 ## create word freq list
+#master_word_freq <- master_fert_word %>%
+#  mutate(word = str_trim(word)) %>%  # remove whitespaces
+#  filter(str_length(word) > 1, !word %in% stopwords_chi) %>% # remove single character words and stopwords
+#  filter(word %>% str_detect(pattern = "\\D+")) %>% # remove words consisting of digits
+#  count(word) %>%
+#  arrange(desc(n))
+
+## create word freq list
 master_word_freq <- master_fert_word %>%
-  filter(!word %in% stopwords) %>% # remove stopwords
-  filter(word %>% str_detect(pattern = "\\D+")) %>% # remove words consisting of digits
+  mutate(word = str_trim(word)) %>%  # remove whitespaces
+  filter(str_length(word) > 1, !word %in% stopwords_chi) %>% # remove single character words and stopwords 
   count(word) %>%
   arrange(desc(n))
 
@@ -127,11 +131,24 @@ master_word_freq <- master_fert_word %>%
 #we could also consider to just keep in certain words. and go from there!
 #like we just select a bunch of keywords that we think are worth discussing and then we only run a word cloud with that?
 master_word_freq %>%
-  filter(n > 10) %>%
+  filter(n > 50) %>%
   filter(nchar(word) >= 2) %>% ## remove monosyllabic tokens
   wordcloud2(shape = "circle", size = 0.4)
 
 
+
+# Selecting top 30 most frequent words
+top_30_words <- master_word_freq %>%
+  top_n(30, n)
+
+
+# Creating the plot
+ggplot(top_30_words, aes(x = reorder(word, n), y = n)) + 
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(x = "Words", y = "Count", title = "30 Most Frequent Words") +
+  theme_minimal() +
+  theme(text = element_text(family = "Songti SC"))
 
 
 

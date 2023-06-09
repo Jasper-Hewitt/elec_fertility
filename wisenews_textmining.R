@@ -95,7 +95,7 @@ print(new_df$content[5])
 #_______________________________________________________________________________________________________________
 #plot newsarticles over time 
 #create new column with only the dates. remove everything after the first space 
-wise_df$dateplot <- str_replace(wise_df$date, " .*", "")
+wise_df$dateplot <- as.Date(str_replace(wise_df$date, " .*", ""), format = "%Y-%m-%d")
 
 #get counts per date
 wise_df_timeplot <- wise_df %>%
@@ -104,7 +104,7 @@ wise_df_timeplot <- wise_df %>%
 
 
 
-#beautiful plot with ggplot
+#beautiful plot with ggplot. This one suddenly has some problems 
 ggplot(wise_df_timeplot, aes(x=dateplot, y=count)) + 
   geom_line(colour = "purple") +
   labs(title = "Daily articles about population ageing", x = "Date", y = "Count") +
@@ -132,7 +132,7 @@ wise_word <- wise_df %>%
   ## word tokenization
   unnest_tokens(
     output = word,
-    input = important_sentences,  # the name of the column we are plotting
+    input = content,  # the name of the column we are plotting
     token = function(x)
       segment(x, jiebar = my_seg)
   ) %>%
@@ -151,16 +151,27 @@ custom_stopwords <- c("經濟", "科技", "報導", "可能", "指出", "認為"
                       "應該", "可能", "提出", "過去", "現在", "進行","今天", "相關", "社會",
                       "議題", "很多", "undo", "需要", "需求", "已經", "目前", "今年", "透過",
                       "地方", "沒有", "記者", "成為", "持續", "市場", "表示", "台灣", "造成",
-                      "不少", "原因", "影響", "人口",
-                      "台北", "生育率", "問題", "育兒", "生育", "少子化")  # specific words about 生育率
+                      "不少", "原因", "影響", "人口","台北", "生育率", "問題", "育兒", "生育", 
+                      "少子化", "/", "10", "20", "30", "一起", "桃園", "台中", "市長", "市民",
+                      "城市", "12", "11", "高雄", "https", "台北市", "台中市", "台南市", "高雄市", "台南")  # specific words about 生育率
 stopwords_chi <- c(stopwords_chi, custom_stopwords)
 
 
 
+
+
+## create word freq list
+#wise_word_freq <- wise_word %>%
+#  mutate(word = str_trim(word)) %>%  # remove whitespaces
+#  filter(str_length(word) > 1, !word %in% stopwords_chi) %>% # remove single character words and stopwords
+#  filter(word %>% str_detect(pattern = "\\D+")) %>% # remove words consisting of digits
+#  count(word) %>%
+#  arrange(desc(n))
+
 ## create word freq list
 wise_word_freq <- wise_word %>%
-  filter(!word %in% stopwords_chi) %>% # remove stopwords
-  filter(word %>% str_detect(pattern = "\\D+")) %>% # remove words consisting of digits
+  mutate(word = str_trim(word)) %>%  # remove leading and trailing whitespace
+  filter(str_length(word) > 1, !word %in% stopwords_chi) %>% # remove single character words and stopwords
   count(word) %>%
   arrange(desc(n))
 
@@ -168,95 +179,28 @@ wise_word_freq <- wise_word %>%
 #we could also consider to just keep in certain words. and go from there!
 #like we just select a bunch of keywords that we think are worth discussing and then we only run a word cloud with that?
 wise_word_freq %>%
-  filter(n > 200) %>%
+  filter(n > 1000) %>%
   filter(nchar(word) >= 2) %>% ## remove monosyllabic tokens
   wordcloud2(shape = "circle", size = 0.4)
 
+#word frequency
+
+# Selecting top 30 most frequent words
+top_30_words <- wise_word_freq %>%
+  top_n(30, n)
+
+
+# Creating the plot
+ggplot(top_30_words, aes(x = reorder(word, n), y = n)) + 
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(x = "Words", y = "Count", title = "30 Most Frequent Words") +
+  theme_minimal() +
+  theme(text = element_text(family = "Songti SC"))
 
 
 
-
-#if we want to plot the whole text based on the text column instead we can use this. 
-#but if we just use the important sentences column we don't have to do that because our df 
-#already has split the sentences into different rows. 
-#plotting the whole text does not lead to very informative results because there are too many unrelated words
-
-CHUNK_DELIMITER <- "[，。！？]+"
-## Tokenization: lines > words
-#wise_line <- wise_df %>%
-## line tokenization
-#  unnest_tokens(
-#    output = line,
-#    input = text,
-#    token = function (x)
-#      str_split(x, CHUNK_DELIMITER)
-#  )   %>%
-#  group_by(doc_id) %>%
-#  mutate(line_id = row_number()) %>%
-#  ungroup
-
-#wise_line %>% head(20)
-
-
-#wise_word <- wise_line %>%
-#  ## word tokenization
-#  unnest_tokens(
-#    output = word,
-#    input = line,
-#    token = function(x)
-#      segment(x, jiebar = my_seg)
-#  ) %>%
-#  group_by(doc_id) %>%
-#  mutate(word_id = row_number()) %>% # create word index within each document
-#  ungroup
-
-#wise_word %>% head(100)
-
-
-
-#part 3: word associations network! this part doesn't work yet!Maybe we should first get the 
-#DELETE THIS PART IT DOESN'T WORK LOL!!
-
-# Load required libraries
-install.packages("qdap")
-library(qdap)
-
-# Word association
-png(filename="your_plot.png", width=800, height=800)
-word_associate(wise_df$important_sentences, match.string = "少子化", 
-               stopwords = stopwords_chi, 
-               network.plot = TRUE)
-dev.off()
-# Add title
-title(main = "Associations with '少子化'")
-
-print(wise_df$important_sentences)
-
-
-# Sentence Tokenization
-wise_sentence <- wise_df %>%
-  unnest_tokens(
-    output = sentence,
-    input = important_sentences,
-    token = function (x)
-      str_split(x, CHUNK_DELIMITER)
-  ) %>%
-  group_by(doc_id) %>%
-  mutate(sentence_id = row_number()) %>%
-  ungroup
-
-# Removing stop words
-wise_sentence <- wise_sentence %>%
-  filter(!sentence %in% stopwords_chi)
-
-# Assuming word_associate works on this format
-
-word_associate(wise_sentence$sentence, match.string = "少子化", 
-               stopwords = stopwords_chi, 
-               network.plot = TRUE)
-dev.off()
-
-
+print(top_30_words[1])
 
 
 
