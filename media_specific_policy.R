@@ -60,18 +60,25 @@ wise_df$content <- sub(".*文字快照", "", wise_df$dirty_content)
 #rid of all of the links
 wise_df$content <- stringi::stri_replace_all_regex(wise_df$content, '^[^\\p{Han}]*', "")
 
+#delete the column we no longer need
+wise_df$dirty_content <- NULL
+wise_df$dirty_date <- NULL
+
 # delete the compressed posts. these are the posts that end with . . . AND have fewer than 200 characters.
 #some posts have . . . but are not actually compressed, so we have to leave those in. 
+#first we trim the data 
+wise_df$content <- trimws(wise_df$content)
 wise_df <- wise_df[!(str_detect(wise_df$content, "\\.\\.\\.$") & nchar(wise_df$content) < 200), ]
+
+#also delete the empty or almost empty rows (some pages in the pdf only provided links to news articles)
+wise_df <- subset(wise_df, nchar(content) >= 10)
 
 #delete newline symbols
 wise_df$content <- gsub("\n", "", wise_df$content)
 
 
 
-#delete the column we no longer need
-wise_df$dirty_content <- NULL
-wise_df$dirty_date <- NULL
+
 
 
 print(wise_df$content[1])
