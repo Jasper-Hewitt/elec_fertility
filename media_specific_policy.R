@@ -1,4 +1,4 @@
-setwd("/Users/jasperhewitt/Desktop/wisenews")
+setwd("/Users/jasperhewitt/Desktop/fertnews")
 library(tidyverse)
 library(tidytext)
 library(quanteda)
@@ -10,7 +10,7 @@ library(lubridate)
 library(purrr)
 library(wordcloud2)
 
-master_df <- read.csv("https://github.com/Jasper-Hewitt/elec_wiseility/raw/main/data/master.csv")
+
 
 
 
@@ -20,7 +20,7 @@ master_df <- read.csv("https://github.com/Jasper-Hewitt/elec_wiseility/raw/main/
 #PART 1: DATA CLEANING 
 
 #convert to txt with pdftools package
-text <- pdf_text("wisenews_wiseility.pdf")
+text <- pdf_text("wisenews_fertility.pdf")
 
 # put everything into one single string. 
 text_combined <- paste(text, collapse = "\n")
@@ -139,12 +139,12 @@ sums_per_cat <-colSums(master_wise_df[,c("教保公共普及化", "友善職場"
 #create a long df for plotting in a stackplot
 l_plot_df <- data.frame(name = names(sums_per_cat), value = sums_per_cat)
 
-# Create the plot
-ggplot(l_plot_df, aes(x = reorder(name, value), y = value)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  coord_flip() +
-  labs(x = "Categories", y = "Sum", title = "policy directions mentioned in the media") +
-  theme_minimal() +
-  theme(text = element_text(family = "Songti SC"))
 
+#plot in same style as the other candidates
+ggplot(l_plot_df, aes(x = reorder(name, value), y = value, fill = name)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("教保公共普及化" = "purple", "友善職場" = "orange", "經濟支持" = "skyblue")) +
+  labs(x = "Categories", y = "Sum", title = "policy directions mentioned in the media", fill = "Label") +
+  theme_minimal() +
+  theme(text = element_text(family = "Songti SC", size=20))
 
