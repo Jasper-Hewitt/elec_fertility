@@ -29,7 +29,7 @@ fertsolutions<- read.xlsx("updated_fertility_check_manual.xlsx")
 
 library(openxlsx)
 
-fertcheck <- read.xlsx("https://github.com/Jasper-Hewitt/elec_fertility/raw/main/data/fertility_check_manual.xlsx", sheet = "fert_check")
+fertcheck <- read.xlsx("https://github.com/Jasper-Hewitt/elec_fertility/raw/main/data/GPT_feasibility_study/fertcheck_0.466.xlsx")
 #there is only one row with a post that might be too long. find and delete it. 
 which(nchar(fertcheck$Message) > 4000)
 fertcheck <- fertcheck[nchar(fertcheck$Message) <= 4000, ]
@@ -38,11 +38,11 @@ fertcheck <- fertcheck[nchar(fertcheck$Message) <= 4000, ]
 
 fertcheck_chatgpt <- data.frame()
 
-for (i in 65:105) {
+for (i in 22:105) {
   
   response <- POST(
     url = "https://api.openai.com/v1/chat/completions", 
-    add_headers(Authorization = paste("Bearer", "key")),
+    add_headers(Authorization = paste("Bearer", "")),
     content_type_json(),
     encode = "json",
     body = list(
@@ -51,8 +51,8 @@ for (i in 65:105) {
       temperature = 0,
       n = 1,
       messages = list(list(role = "system", content = "you are a researcher that judges whether a bunch of posts mention a certain topic. You only respond with 1 and 0"),
-                      list(role = "user", content = paste0("judge wether the following posts mentions one of the following: 生孩子, 出生, 寶寶, 當父母, 幼兒園, 改善教育, 鼓勵育兒 
-                                                            育兒補貼, 少子化, 
+                      list(role = "user", content = paste0("judge wether the following posts are related to the eageing population, childbirth, policies related to small children
+                                                            or any other policies aimed at creating a better environment to raise children, like subsidies or improved daycare.
                                                             if yes, give me 1. if it is completely unrelated. give me 0. do not give me anything else.
                                                         
                                                             this is the post:" , fertcheck$Message[i])))
@@ -75,7 +75,7 @@ fertcheck_chatgpt <- fertcheck_chatgpt[!duplicated(fertcheck_chatgpt$order), ]
 
 
 #now calculate the accuracy. change column name first
-fertcheck <- rename(fertcheck, manual_label = "fertility_check.(1.if.yes,.0.if.no)")
+#fertcheck <- rename(fertcheck, manual_label = "fertility_check.(1.if.yes,.0.if.no)")
 
 #put the two together
 fertcheck$chatgpt <- fertcheck_chatgpt$chatgpt
@@ -91,7 +91,7 @@ fertcheck <- fertcheck %>%
 
 
 
-sum(fertcheck$check) / nrow(fertcheck) #accuracy 0.466
+sum(fertcheck$check) / nrow(fertcheck) #accuracy 0.514
 
 
 
@@ -100,7 +100,7 @@ install.packages("writexl")
 library(writexl)
 
 # Write the dataframe to an Excel file
-write_xlsx(fertcheck, "fertcheck_0.466.xlsx")
+write_csv(fertcheck, "fertcheck_0.514.csv")
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________
 #now for fert_solutions
