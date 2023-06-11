@@ -111,40 +111,47 @@ master_wise_df<-master_wise_df%>%
 master_wise_df
 
 #define keywords for each category (based on our research into government websites)
-search_pattern_cat_1 <- "幼兒園|教保服務|托育資源|教保人員|居家式托育服務|機構式托育服務|家長親職|育兒知能|親職教育活動|托育|孕產婦關懷中心|
-                         托育資源中心|居家式托育服務|兒童預防保健服務0-未滿 7 歲|收出養媒合及寄養安置|兒童三級預防措施|防治兒虐事件|公立幼兒園|
-                         非營利幼兒園|孕產婦關懷中心|產前健康檢查|非營利幼兒園實施辦法|社區保母|托育人員|收托|送托|托嬰中心|公私協力托嬰中心|
-                         托育安親管道|公托|補助托嬰兒|公幼|在校安親班|夜托|臨托|收托時間|托育人員|私幼|托育|親子中心|托育補助|托育家園|公共化托育
-                         |公立托育中心|2-6歲（未滿）幼兒|公立幼兒園|非營利幼兒園|幼兒教育及照顧法|準公共機制|平價就學場域|公共化幼兒園|幼兒園入園率|
-                         0-2歲（未滿）幼兒|公共托育|準公共機制|居家式托育|私立托嬰中心|平價名額"
+search_pattern_workplace <- "安胎假|陪產假|產檢假|育嬰留職停薪|生理假|企業托育|聯合托育|企業哺乳室"
 
-search_pattern_cat_2 <-"安胎假|產檢|陪產假|產檢假|育嬰留職停薪|企業托育設施或措施|企業托育資訊|有薪產檢假|有薪陪產假|生理假|聯合托育|哺乳室"
+search_pattern_financial_aid <-"生育獎勵|嬰兒補助|育兒津貼|育兒補助|生養津貼|生養補助|生育津貼|生育補助|育嬰留職停薪津貼|就學補助|就寫津貼｜幼兒學前特別扣除額|免學費|育嬰留職停薪津貼|未來教育及發展帳戶"
 
-search_pattern_cat_3 <- "妊娠生產醫療給付|各類保險生育給付|地方政府生育津貼|地方政府低收入戶生育補助|育嬰留職停薪津貼|就業者家庭部分托育費用補助|
-                         特殊境遇家庭兒童托育津貼補助|未就業家庭育兒津貼特殊境遇家庭兒童托育津貼補助|幼兒學前特別扣除額|中低收入戶幼兒就學補助|5歲幼兒學費就學補助|
-                         兒童與少年未來教育及發展帳戶|父母未就業家庭|托育費用補助|免學費|就學補助|社會住宅|凍卵|坐月子|產檢|0-2歲（未滿）幼兒托育補助|2-6歲（未滿）幼兒就學補助
-                         |0-6歲育兒津貼|公共化機構|準公共化機構|公設民營托嬰中心|社區公共托育家園|每月托育補助|第一胎|第二胎|第三胎|不孕症|試管嬰兒|不孕夫妻"
+search_pattern_cat_childcare <- "公托|公幼|托育|公共托育|托育資源|居家式托育服務|機構式托育服務|收托|送托|托嬰|夜托|臨托|教保服務|教保人員|社區保母|在校安親班|準公共機制|平價就學場域
+                                |平價名額|兒童預防保健服務0-未滿 7 歲|收出養媒合|養安置|兒童三級預防措施|防治兒虐事件"
+
+search_pattern_cat_infertility <- "懷孕以及孕婦相關|不孕症|試管嬰兒|不孕夫|凍卵|坐月子|產檢|孕產婦關懷中心|產前健康檢查"
+
 
 #label posts according to keyword search    
 master_wise_df <- master_wise_df %>%
-  mutate(教保公共普及化 = ifelse(grepl(search_pattern_cat_1, Content), 1, 0))%>%
-  mutate(友善職場 = ifelse(grepl(search_pattern_cat_2, Content), 1, 0))%>%
-  mutate(經濟支持 = ifelse(grepl(search_pattern_cat_3, Content), 1, 0))
+  mutate(Workplace = ifelse(grepl(search_pattern_workplace, Content), 1, 0))%>%
+  mutate(Financial_aid = ifelse(grepl(search_pattern_financial_aid, Content), 1, 0))%>%
+  mutate(Childcare = ifelse(grepl(search_pattern_cat_childcare, Content), 1, 0))%>%
+  mutate(Infertility=ifelse(grepl(search_pattern_cat_infertility, Content), 1, 0))
 
 print(names(master_wise_df))
 
 # Calculate the sum for the relevant columns 
-sums_per_cat <-colSums(master_wise_df[,c("教保公共普及化", "友善職場", "經濟支持")])
+#sums_per_cat <-colSums(master_wise_df[,c("教保公共普及化", "友善職場", "經濟支持")])
 
 #create a long df for plotting in a stackplot
-l_plot_df <- data.frame(name = names(sums_per_cat), value = sums_per_cat)
+#l_plot_df <- data.frame(name = names(sums_per_cat), value = sums_per_cat)
 
+# Calculate the sum of the variables
+sum_df <- master_wise_df %>%
+  summarise(Workplace = sum(Workplace),
+            Financial_aid = sum(Financial_aid),
+            Childcare = sum(Childcare),
+            Infertility = sum(Infertility))
 
-#plot in same style as the other candidates
-ggplot(l_plot_df, aes(x = reorder(name, value), y = value, fill = name)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(values = c("教保公共普及化" = "purple", "友善職場" = "orange", "經濟支持" = "skyblue")) +
-  labs(x = "Categories", y = "Sum", title = "policy directions mentioned in the media", fill = "Label") +
+# Reshape the data into a long format
+l_df <- sum_df %>%
+  gather('label', 'sum', 1:4)
+
+# Plot
+ggplot(l_df, aes(x = label, y = sum, fill = label)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("Workplace" = "purple", "Financial_aid" = "orange", "Childcare" = "skyblue", "Infertility" = "green")) +
   theme_minimal() +
-  theme(text = element_text(family = "Songti SC", size=20))
-
+  labs(title = "Media", x = "Label", y = "Sum", fill = "Label") +
+  theme_minimal() +
+  theme(text = element_text(family = "Songti SC", size = 20))
