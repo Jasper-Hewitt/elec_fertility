@@ -38,7 +38,7 @@ fertcheck <- fertcheck[nchar(fertcheck$Message) <= 4000, ]
 
 fertcheck_chatgpt <- data.frame()
 
-for (i in 22:105) {
+for (i in 1:105) {
   
   response <- POST(
     url = "https://api.openai.com/v1/chat/completions", 
