@@ -1,7 +1,10 @@
 # elec_fertility
 
 ## keywords 
+check this for making a cool readme https://www.makeareadme.com/
 
+
+![Alt Text](https://github.com/Jasper-Hewitt/elec_fertility/blob/main/data/%E6%9E%97%E4%BD%B3%E9%BE%8D.png?raw=true)
 **1. Discovering specific directions of fertility posts**
           
           search_pattern_cat_1 <- "幼兒園|教保服務|托育資源|教保人員|居家式托育服務|機構式托育服務|家長親職|育兒知能|親職教育活動|托育|孕產婦關懷中心|
