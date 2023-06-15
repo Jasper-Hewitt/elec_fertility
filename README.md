@@ -2,7 +2,10 @@
 
 ## keywords 
 check this for making a cool readme https://www.makeareadme.com/
+<div align="justify">
 
+This is how we write our own thing. and this is what we do lol.  asdf asdf asd fasdf asdf asdf adsf asdf asdf asdf asd fasdf asdf asdf sad fasd fasdf asd fasd fasd fasd fasdf asd fasdf asd fsad fasdf asdf asd fsda fasdf asd fasdf asdf asdf asdf asd fasdf asdf asdf asd fasd fasd fasdf asdf asd fasdf asdfadsf asdf a
+</div>
 
 ![Alt Text](https://github.com/Jasper-Hewitt/elec_fertility/blob/main/data/%E6%9E%97%E4%BD%B3%E9%BE%8D.png?raw=true)
 **1. Discovering specific directions of fertility posts**
