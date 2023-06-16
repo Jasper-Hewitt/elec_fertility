@@ -1,5 +1,8 @@
 # elec_fertility
 
+## to do
+wisenews wordcloud still has to be updated and aligned with the other documents. the others have all ben fixed
+
 ## keywords 
 check this for making a cool readme https://www.makeareadme.com/
 <div align="justify">
