@@ -1,7 +1,7 @@
 # elec_fertility
 
 ## to do
-wisenews wordcloud still has to be updated and aligned with the other documents. the others have all ben fixed
+wisenews_textmining still has to be updated into wisenews wisenews_wordcloud, make sure it allignes with the other wordcloud file. 
 
 ## keywords 
 check this for making a cool readme https://www.makeareadme.com/
