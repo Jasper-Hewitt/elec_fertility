@@ -107,8 +107,7 @@ https://github.com/Georgits/datacamp/blob/master/01_R/Text%20Mining%20Bag%20of%2
 
 NTNU intro to tokenization and wordclouds:
 
-https://github.com/Jasper-Hewitt/elec_fertility/blob/main/wisenews_textmining.R
-
+https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html
 
 
 
