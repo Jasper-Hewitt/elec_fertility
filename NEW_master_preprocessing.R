@@ -5,7 +5,7 @@ library(stringr)
 library(readtext)
 library(lubridate)
 library(purrr)
-library(readxlsx)
+library(readxl)
 setwd("/Users/jasperhewitt/Desktop/fertnews")
 master_df <- read.csv("/Users/jasperhewitt/Desktop/fertnews/FB_All_Candidates.csv")
 candidate_info <- read_xlsx("/Users/jasperhewitt/Desktop/fertnews/candidates_info.xlsx")
@@ -14,6 +14,27 @@ candidate_info <- read_xlsx("/Users/jasperhewitt/Desktop/fertnews/candidates_inf
 #only keep relevant columns 
 master_df <- master_df %>%
   select('Page.Name', 'Post.Created.Date', 'Message', 'Image.Text', 'Description')
+
+#merge the two dfs on Page.Name
+master_df<-master_df%>%
+  left_join(candidate_info, by='Page.Name')
+
+#delete all the posts before they started running
+#IDEA
+#then select date (later than) -> started running date (this way we should only 
+#be left with the posts from their running period! 
+
+
+
+
+
+
+
+
+
+
+
+
 
 #merge on Page.Name (they both have it). 
 #this way we automatically assign the city, party and english name
