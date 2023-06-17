@@ -4,6 +4,9 @@
 - wisenews_textmining still has to be updated into wisenews wisenews_wordcloud, make sure it allignes with the other wordcloud file and with wisenews specific policy
 direction
 - clean Kai's parts,in the end we are gonna put daily average as well as the total volume (per candidate)
+- I created a search with ALL candidates for period 11 Feb 2022 to 27 Nov 2022
+- https://apps.crowdtangle.com/search/1778778?customStartDate=2022-02-10T16:00:00&customEndDate=2022-11-27T15:59:00&platform=facebook&postTypes=&includedProducerIds=8749595,392096,415690,375324,143122,1883191,399441,2047893,467834,2222312,486515,19963244,448410,4654371,3146293&producerTypes=3,1,2&q=&sortBy=date&sortOrder=desc&timeframe=custom
+- Will upload file "FB_All_Candidates.csv"
 
 
 
