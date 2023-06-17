@@ -10,7 +10,9 @@ library(lubridate)
 library(purrr)
 library(wordcloud2)
 
-master_df <- read.csv("https://github.com/Jasper-Hewitt/elec_fertility/raw/main/data/master.csv")
+#master_df <- read.csv("https://github.com/Jasper-Hewitt/elec_fertility/raw/main/data/master.csv")
+master_df <- read.csv("/Users/jasperhewitt/Desktop/fertnews/master.csv")
+
 
 #___________#__________### PREPROCESSING AND CLEANING ####___________#__________# 
 
@@ -90,7 +92,7 @@ custom_stopwords <- c("經濟", "科技", "報導", "可能", "指出", "認為"
                       "議題", "很多", "undo", "需要", "需求", "已經", "目前", "今年", "透過",
                       "地方", "沒有", "記者", "成為", "持續", "市場", "表示", "台灣", "造成",
                       "不少", "原因", "影響", "人口","台北", "生育率", "問題", "育兒", "生育", 
-                      "少子化", "/", "10", "20", "30", "一起", "桃園", "台中", "市長", "市民",
+                      "少子化", "/", "10", "20", "30", "一起", "桃園", "台中", "市長", "市民", "朋友",
                       "城市", "12", "11", "高雄", "https", "台北市", "台中市", "台南市", "高雄市", "台南")  # specific words about 生育率# specific words about 生育率
 stopwords <- c(stopwords, custom_stopwords)
 
