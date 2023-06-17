@@ -69,10 +69,6 @@ wise_df <- subset(wise_df, nchar(content) >= 10) #4154 -> 3917
 #delete newline symbols
 wise_df$content <- gsub("\n", "", wise_df$content)
 
-#change column name for later code
-master_wise_df<-master_wise_df%>%
-  rename(Content=content)
-
 
 #___________#__________### keyword search ####___________#__________# 
 
@@ -91,10 +87,10 @@ search_pattern_cat_infertility <- "懷孕以及孕婦相關|不孕症|試管嬰�
 
 #label posts according to keyword search    
 master_wise_df <- master_wise_df %>%
-  mutate(Workplace = ifelse(grepl(search_pattern_workplace, Content), 1, 0))%>%
-  mutate(Financial_aid = ifelse(grepl(search_pattern_financial_aid, Content), 1, 0))%>%
-  mutate(Childcare = ifelse(grepl(search_pattern_cat_childcare, Content), 1, 0))%>%
-  mutate(Infertility=ifelse(grepl(search_pattern_cat_infertility, Content), 1, 0))
+  mutate(Workplace = ifelse(grepl(search_pattern_workplace, content), 1, 0))%>%
+  mutate(Financial_aid = ifelse(grepl(search_pattern_financial_aid, content), 1, 0))%>%
+  mutate(Childcare = ifelse(grepl(search_pattern_cat_childcare, content), 1, 0))%>%
+  mutate(Infertility=ifelse(grepl(search_pattern_cat_infertility, content), 1, 0))
 
 print(names(master_wise_df))
 
