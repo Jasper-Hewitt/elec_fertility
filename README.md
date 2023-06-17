@@ -1,8 +1,14 @@
 # elec_fertility
 
 ## to do
-wisenews_textmining still has to be updated into wisenews wisenews_wordcloud, make sure it allignes with the other wordcloud file and with wisenews specific policy
+- wisenews_textmining still has to be updated into wisenews wisenews_wordcloud, make sure it allignes with the other wordcloud file and with wisenews specific policy
 direction
+- clean Kai's parts,in the end we are gonna put daily average as well as the total volume (per candidate)
+
+
+
+
+
 
 ## keywords 
 check this for making a cool readme https://www.makeareadme.com/
