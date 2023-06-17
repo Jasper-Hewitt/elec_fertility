@@ -72,7 +72,6 @@ wise_df$content <- gsub("\n", "", wise_df$content)
 
 #___________#__________### keyword search ####___________#__________# 
 
-master_wise_df
 
 #define keywords for each category (based on our research into government websites)
 search_pattern_workplace <- "安胎假|陪產假|產檢假|育嬰留職停薪|生理假|企業托育|聯合托育|企業哺乳室"
@@ -86,16 +85,16 @@ search_pattern_cat_infertility <- "懷孕以及孕婦相關|不孕症|試管嬰�
 
 
 #label posts according to keyword search    
-master_wise_df <- master_wise_df %>%
+wise_df <- wise_df %>%
   mutate(Workplace = ifelse(grepl(search_pattern_workplace, content), 1, 0))%>%
   mutate(Financial_aid = ifelse(grepl(search_pattern_financial_aid, content), 1, 0))%>%
   mutate(Childcare = ifelse(grepl(search_pattern_cat_childcare, content), 1, 0))%>%
   mutate(Infertility=ifelse(grepl(search_pattern_cat_infertility, content), 1, 0))
 
-print(names(master_wise_df))
+print(names(wise_df))
 
 # Calculate the sum of the labels
-sum_df <- master_wise_df %>%
+sum_df <- wise_df %>%
   summarise(Workplace = sum(Workplace),
             Financial_aid = sum(Financial_aid),
             Childcare = sum(Childcare),
