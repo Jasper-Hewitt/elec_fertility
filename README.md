@@ -5,9 +5,11 @@
 
 - Do not plot candidate vs candidate specific policy mentions. Only city vs city and perhaps party vs party!
 for first sections (how often did candidates mention this problem)
-– create total mentions per candidate 
-– Create average daily posts about fertility 
-– these can be separate plots
+- add in the x axis how many mentions each city has. but keep the emphasis on the proportions.
+- put specific policy mention thing in the main file??
+- rerun wordcloud based on the new posts!
+- do we still want to make a timeline for the few candidates that mentioned this the most?
+- clean up the repo
 
 Part 1.1. This can be in same code as the aboveSEE NEW_master_preprocessing clean Kai's parts,in the end we are gonna put daily average as well as the total volume (per candidate)
 - I created a search with ALL candidates for period 11 Feb 2022 to 27 Nov 2022
