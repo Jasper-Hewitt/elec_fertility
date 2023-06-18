@@ -19,6 +19,37 @@ master_df <- master_df %>%
 master_df<-master_df%>%
   left_join(candidate_info, by='Page.Name')
 
+#format time 
+master_df$Post.Created.Date <- as.Date(master_df$Post.Created.Date, "%Y-%m-%d")
+master_df$Date_Started_Running <- as.Date(master_df$Date_Started_Running, "%Y-%m-%d")
+#manually fix黃偉哲!!!!! they get turned around
+#then also check 林智堅's posts, they also got some problem! idk why!
+
+
+#filter out the posts before each candidate formally started running
+master_df <- master_df%>%
+  filter(Post.Created.Date >= Date_Started_Running)
+
+library(dplyr)
+
+# some differ significantly from their other dates
+#like 黃偉哲, find out what went wrong
+#i downloaded his csv files and it says 495. but after
+#running this he suddenly has 540?
+#it somehow changes the date from 03-02 to 02-03???? 
+#why does it do this this is super weird. 
+count_df <- master_df %>%
+  group_by(Candidate) %>%
+  summarise(Count = n(), .groups = "drop")
+
+# Print the result
+print(count_df)
+
+
+
+
+
+
 #delete all the posts before they started running
 #IDEA
 #then select date (later than) -> started running date (this way we should only 
