@@ -1,21 +1,14 @@
 # elec_fertility
 
+## code
+all wisenews stuff is in wisenews.r
+all candidates stuff is in main_code.r
+
+
 ## to do
-
-
-- Do not plot candidate vs candidate specific policy mentions. Only city vs city and perhaps party vs party!
-for first sections (how often did candidates mention this problem)
-- add in the x axis how many mentions each city has. but keep the emphasis on the proportions.
-- put specific policy mention thing in the main file??
-- rerun wordcloud based on the new posts!
-- do we still want to make a timeline for the few candidates that mentioned this the most?
-- clean up the repo
-
-Part 1.1. This can be in same code as the aboveSEE NEW_master_preprocessing clean Kai's parts,in the end we are gonna put daily average as well as the total volume (per candidate)
-- I created a search with ALL candidates for period 11 Feb 2022 to 27 Nov 2022
-- https://apps.crowdtangle.com/search/1778778?customStartDate=2022-02-10T16:00:00&customEndDate=2022-11-27T15:59:00&platform=facebook&postTypes=&includedProducerIds=8749595,392096,415690,375324,143122,1883191,399441,2047893,467834,2222312,486515,19963244,448410,4654371,3146293&producerTypes=3,1,2&q=&sortBy=date&sortOrder=desc&timeframe=custom
-- Will upload file "FB_All_Candidates.csv"
-
+- clean up repository
+- make candidates posts plot over time
+- put plots into report 
 
 
 
@@ -28,7 +21,7 @@ check this for making a cool readme https://www.makeareadme.com/
 This is how we write our own thing. and this is what we do lol.  asdf asdf asd fasdf asdf asdf adsf asdf asdf asdf asd fasdf asdf asdf sad fasd fasdf asd fasd fasd fasd fasdf asd fasdf asd fsad fasdf asdf asd fsda fasdf asd fasdf asdf asdf asdf asd fasdf asdf asdf asd fasd fasd fasdf asdf asd fasdf asdfadsf asdf a
 </div>
 
-![Alt Text](https://github.com/Jasper-Hewitt/elec_fertility/blob/main/data/%E6%9E%97%E4%BD%B3%E9%BE%8D.png?raw=true)
+
 **1. Discovering specific directions of fertility posts**
           
           search_pattern_cat_1 <- "幼兒園|教保服務|托育資源|教保人員|居家式托育服務|機構式托育服務|家長親職|育兒知能|親職教育活動|托育|孕產婦關懷中心|
