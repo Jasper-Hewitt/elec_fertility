@@ -92,7 +92,7 @@ master_df <- master_df %>%
 
 
 
-#___________#__________### 3: number of fertility posts average daily fertility posts ####___________#__________# 
+#___________#__________### 3: NUMBER OF TOTAL FERTILITY POSTS PER CANDIDATE & AVERAGE DAILY FERTILITY POSTS PER CANDIDATE ####___________#__________# 
 
 #find posts related to fertility based on all the keywords we have identified in our research
 search_pattern<-"少子化|生育率|生育|生孩子|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托
