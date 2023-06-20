@@ -16,17 +16,27 @@ This GitHub repository offers a template specifically designed to teach students
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 
 ## File Structure
+- GPT_test contains the code and the results for our test with chat_GPT. The csv files contain the post, manual labels, and GPT's output.
+- data contains all of our data from both Wisenews and Crowdtangle
+  - Wisenews: we split the pdf file in two because it was too large to upload.
+  - FB_All_candidates.csv contains all the Facebook posts from all the candidates in the period 2022/02/11 to 2022/11/27. master_candidates_posts.csv is the preprocessed version
+    that is adjusted for the exact campaign period for each candidate. candidates_info.xlsx contains additional information about each candidate (e.g. city, party, english name,
+    etc.)
+- dict_and_stopwords contains our custom dictionary and stop word list.
+- birth_rate_plot contains linear plots based on Taiwan's fertility data. We use this in our introduction
+- final_paper_group06.pdf (final report)
+- main_code.R contains all of the preprocessing, data cleaning, text mining, and plots for the candidates' facebook posts.
+- wisenews.R contains all of the preprocessing, data cleaning, text mining, and plots for the articles collected from wisenews.
 
-[Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
-
-          
+  <strong> file structure overview </strong>
+  
           ├── GPT_test
           │   ├── GPT_test.R
           │   ├── fertcheck_0.514.csv
           │   ├── fertsolutions_GPT0.233.csv
           │   └── general_topics_GPT0.481.csv
           ├── data
-          │   ├── Wisenews_data
+          │   ├── Wisenews_data 
           │   │   ├── wisenews_fertility_part1.pdf
           │   │   └── wisenews_fertility_part2.pdf
           │   └── candidate_posts
@@ -40,10 +50,7 @@ This GitHub repository offers a template specifically designed to teach students
           ├── birth_rate_plots.R
           ├── final_paper_group06.pdf
           ├── main_code.R
-          ├── output.txt
           └── wisenews.R
-          
-          6 directories, 17 files
 
 
 ## Analysis
