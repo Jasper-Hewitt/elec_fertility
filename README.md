@@ -19,6 +19,33 @@ This GitHub repository offers a template specifically designed to teach students
 
 [Describe the file structure of your project, including how the files are organized and what each file contains. Be sure to explain the purpose of each file and how they are related to one another.]
 
+          
+          ├── GPT_test
+          │   ├── GPT_test.R
+          │   ├── fertcheck_0.514.csv
+          │   ├── fertsolutions_GPT0.233.csv
+          │   └── general_topics_GPT0.481.csv
+          ├── data
+          │   ├── Wisenews_data
+          │   │   ├── wisenews_fertility_part1.pdf
+          │   │   └── wisenews_fertility_part2.pdf
+          │   └── candidate_posts
+          │       ├── FB_All_Candidates.csv
+          │       ├── candidates_info.xlsx
+          │       └── master_candidates_posts.csv
+          ├── dict_and_stopwords
+          │   ├── customdict.txt
+          │   └── stopwords_zh_trad.txt
+          ├── README.md
+          ├── birth_rate_plots.R
+          ├── final_paper_group06.pdf
+          ├── main_code.R
+          ├── output.txt
+          └── wisenews.R
+          
+          6 directories, 17 files
+
+
 ## Analysis
 
 [Describe your analysis methods and include any visualizations or graphics that you used to present your findings. Explain the insights that you gained from your analysis and how they relate to your research question or problem statement.]
