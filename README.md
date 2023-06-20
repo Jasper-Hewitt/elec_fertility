@@ -38,8 +38,7 @@ This GitHub repository offers a template specifically designed to teach students
 ## References
 
 [List any references or resources that you used during your project, including data sources, analytical methods, and tools.]
-
-
+for tokenization and wordclouds: https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html
 
 
 # elec_fertility
