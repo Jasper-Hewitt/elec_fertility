@@ -92,7 +92,7 @@ master_df <- master_df %>%
 
 
 
-#___________#__________### 3: NUMBER OF TOTAL FERTILITY POSTS PER CANDIDATE & AVERAGE DAILY FERTILITY POSTS PER CANDIDATE ####___________#__________# 
+#___________#__________### 3: number of fertility posts average daily fertility posts ####___________#__________# 
 
 #find posts related to fertility based on all the keywords we have identified in our research
 search_pattern<-"少子化|生育率|生育|生孩子|懷孕|育兒|育嬰|新生兒|托嬰|公托|臨托
@@ -155,6 +155,23 @@ ggplot(by_candidate, aes(x = reorder(Candidate, avg_daily_fert_post), y = avg_da
 
 
 #___________#__________### 4: NUMBER OF POSTS OVERTIME (OF TOP 5 CANDIDATES)? ####___________#__________#
+
+
+#get counts per date
+master_fert_df_timeplot <- master_fert_df %>%
+  group_by(Post.Created.Date) %>%
+  summarise(count = n())
+
+#plot with lineplot
+ggplot(master_fert_df_timeplot, aes(x=Post.Created.Date, y=count)) + 
+  geom_line(colour = "orange") +
+  labs(title = "Daily Facebook posts by all candidates about population ageing", x = "Date", y = "Posts") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") + #set date per month instead of day
+  scale_y_continuous(breaks = seq(2, 8, by = 2)) + #set y axis breaks manually
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkblue"))
+
+
 
 
 
