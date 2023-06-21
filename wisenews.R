@@ -17,8 +17,11 @@ library(wordcloud2)
 #convert to txt with pdftools package
 text <- pdf_text("wisenews_fertility.pdf")
 
+
 # put everything into one single string
 text_combined <- paste(text, collapse = "\n")
+
+writeLines(text_combined, "wisenews_fertility.txt")
 
 # Split text on '文章編號:' because this indicates the end of an article
 split_text <- strsplit(text_combined, split = "文章編號:")
@@ -77,7 +80,7 @@ search_pattern_workplace <- "安胎假|陪產假|產檢假|育嬰留職停薪|�
 
 search_pattern_financial_aid <-"生育獎勵|嬰兒補助|育兒津貼|育兒補助|生養津貼|生養補助|生育津貼|生育補助|育嬰留職停薪津貼|就學補助|就寫津貼｜幼兒學前特別扣除額|免學費|育嬰留職停薪津貼|未來教育及發展帳戶"
 
-search_pattern_cat_childcare <- "公托|公幼|托育|公共托育|托育資源|居家式托育服務|機構式托育服務|收托|送托|托嬰|夜托|臨托|教保服務|教保人員|社區保母|在校安親班|準公共機制|平價就學場域
+search_pattern_cat_childcare <- "公托|公幼|托育|收托|送托|托嬰|夜托|臨托|教保服務|教保人員|社區保母|在校安親班|準公共機制|平價就學場域
                                 |平價名額|兒童預防保健服務0-未滿 7 歲|收出養媒合|養安置|兒童三級預防措施|防治兒虐事件"
 
 search_pattern_cat_infertility <- "懷孕以及孕婦相關|不孕症|試管嬰兒|不孕夫|凍卵|坐月子|產檢|孕產婦關懷中心|產前健康檢查"
@@ -129,7 +132,7 @@ wise_df_timeplot <- wise_df %>%
 #beautiful plot with ggplot. This one suddenly has some problems 
 ggplot(wise_df_timeplot, aes(x=dateplot, y=count)) + 
   geom_line(colour = "purple") +
-  labs(title = "Daily news articles about population ageing", x = "Date", y = "Count") +
+  labs(title = "Daily news articles about population ageing", x = "Date", y = "Articles") +
   scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") + #set date per month instead of day
   theme_minimal() + 
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkblue"))
