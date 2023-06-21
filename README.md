@@ -24,7 +24,7 @@ This GitHub repository offers a template specifically designed to teach students
   - FB_All_candidates.csv contains all the Facebook posts from all the candidates in the period 2022/02/11 to 2022/11/27. master_candidates_posts.csv is the preprocessed version
     that is adjusted for the exact campaign period for each candidate. candidates_info.xlsx contains additional information about each candidate (e.g. city, party, english name,
     etc.). Lastly, election_bulletin.xlsx contains all of the candidates' election bullitins. These played an important role in compiling our keyword list.
-- dict_and_stopwords contains our custom dictionary and stop word list.
+- dict_and_stopwords contains our custom dictionary and stop word list, and additional_custom stop word list
 - birth_rate_plot contains linear plots based on Taiwan's fertility data. We use this in our introduction
 - final_paper_group06.pdf (final report)
 - main_code.R contains all of the preprocessing, data cleaning, text mining, and plots for the candidates' facebook posts.
@@ -47,6 +47,7 @@ This GitHub repository offers a template specifically designed to teach students
           │       ├── candidates_info.xlsx
           │       └── master_candidates_posts.csv
           ├── dict_and_stopwords
+          │   ├── additional_custom_stopwords.txt
           │   ├── customdict.txt
           │   └── stopwords_zh_trad.txt
           ├── README.md
@@ -55,7 +56,7 @@ This GitHub repository offers a template specifically designed to teach students
           ├── main_code.R
           └── wisenews.R
 
-
+additional_custom_stopwords.txt
 ## Analysis
 <div align="justify">
 [Describe your analysis methods and include any visualizations or graphics that you used to present your findings. Explain the insights that you gained from your analysis and how they relate to your research question or problem statement.]
