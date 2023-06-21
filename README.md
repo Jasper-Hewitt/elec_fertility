@@ -1,23 +1,29 @@
-
-# ici_template [This section can be removed in the submission version]
-This GitHub repository offers a template specifically designed to teach students how to write effective README.md files and create a well-organized file structure. The template provides clear instructions and examples, helping students to learn the basics of GitHub and how to create professional-looking repositories.
-
-
-# Project Title
-
-[An Investigation into How the Declining Fertility Problem Featured in Taiwan's 2022 Mayoral Election]
+# An Investigation into How the Declining Fertility Problem Featured in Taiwan's 2022 Mayoral Election
 
 ## Project Description
+
 <div align="justify">
-[Enter a brief description of your project, including the data you used and the analytical methods you applied. Be sure to provide context for your project and explain why it is important.]
+  
+In 2022, Taiwan recorded its lowest fertility rate of 0.87 and is expected to reach to the world’s lowest by 2035 (Tzu-Ti, H., 2022). The issue has also become one of the hot button topics that had been discussed in Taiwan during the elections. Against this backdrop, the candidates vying for positions in the 2022 mayoral elections have recognized the significance of this issue and have put forward various strategies and policy proposals to tackle the low fertility rate problem head-on. In our project, we will focus on Taiwan’s six special municipalities, including Taipei, New Taipei, Taoyuan, Taichung, Tainan, and Kaohsiung. 
+
+This research endeavour seeks to delve into the extent to which the issue of low fertility rates was prominent in the discourse surrounding the 2022 mayoral elections. Through the following research questions, we aim to uncover the underlying factors that shaped the candidates' outlooks on low fertility rates. 
+
+- How frequently did the candidates mention the issue on Facebook?
+- What policy ideas did they propose to resolve the issue?
+- How does this compare to discussions and perceptions in the media?
+
 </div>
 
 ## Getting Started
+
 <div align="justify">
 [Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
 </div>
 
 ## File Structure
+
+<div align="justify">
+  
 - GPT_test contains the code and the results for our test with chat_GPT. The csv files contain the post, manual labels, and GPT's output.
 - data contains all of our data from both Wisenews and Crowdtangle
   - Wisenews: we split the pdf file in two because it was too large to upload.
@@ -29,7 +35,8 @@ This GitHub repository offers a template specifically designed to teach students
 - final_paper_group06.pdf (final report)
 - main_code.R contains all of the preprocessing, data cleaning, text mining, and plots for the candidates' facebook posts.
 - wisenews.R contains all of the preprocessing, data cleaning, text mining, and plots for the articles collected from wisenews.
-
+  
+</div>
   <strong> file structure overview </strong>
   
           ├── GPT_test
@@ -56,13 +63,15 @@ This GitHub repository offers a template specifically designed to teach students
           ├── main_code.R
           └── wisenews.R
 
-additional_custom_stopwords.txt
+
 ## Analysis
+
 <div align="justify">
 [Describe your analysis methods and include any visualizations or graphics that you used to present your findings. Explain the insights that you gained from your analysis and how they relate to your research question or problem statement.]
 </div>
 
 ## Results
+
 <div align="justify">
 [Provide a summary of your findings and conclusions, including any recommendations or implications for future research. Be sure to explain how your results address your research question or problem statement.]
 </div>
