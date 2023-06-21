@@ -23,7 +23,7 @@ This GitHub repository offers a template specifically designed to teach students
   - Wisenews: we split the pdf file in two because it was too large to upload.
   - FB_All_candidates.csv contains all the Facebook posts from all the candidates in the period 2022/02/11 to 2022/11/27. master_candidates_posts.csv is the preprocessed version
     that is adjusted for the exact campaign period for each candidate. candidates_info.xlsx contains additional information about each candidate (e.g. city, party, english name,
-    etc.)
+    etc.). Lastly, election_bulletin.xlsx contains all of the candidates' election bullitins. These played an important role in compiling our keyword list.
 - dict_and_stopwords contains our custom dictionary and stop word list.
 - birth_rate_plot contains linear plots based on Taiwan's fertility data. We use this in our introduction
 - final_paper_group06.pdf (final report)
@@ -43,6 +43,7 @@ This GitHub repository offers a template specifically designed to teach students
           │   │   └── wisenews_fertility_part2.pdf
           │   └── candidate_posts
           │       ├── FB_All_Candidates.csv
+          │       ├── Election_bulletin.xlsx
           │       ├── candidates_info.xlsx
           │       └── master_candidates_posts.csv
           ├── dict_and_stopwords
