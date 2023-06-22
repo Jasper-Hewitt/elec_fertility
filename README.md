@@ -20,7 +20,9 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 ## Getting Started
 
 <div align="justify">
-The full report can be found in final_paper_group06.pdf. In this Github, we have  included the relevant R files that we used for the (i) inital GPT feasbility test; (ii) main codes used for data analysis; and (iii) clean the news articles obtained through the wisenews platform. The repository also includes the data files (e.g. CSV, PDF and XLSX) relevant to the project.</div>
+To start, you can download final_paper_group06.pdf, which contains the full report, as well as read the file structure which summarises 
+  
+In this Github, we have  included the relevant R files that we used for the (i) inital GPT feasbility test; (ii) main codes used for data analysis; and (iii) clean the news articles obtained through the wisenews platform. The repository also includes the data files (e.g. CSV, PDF and XLSX) relevant to the project.</div>
 
 ## File Structure
 
