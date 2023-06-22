@@ -69,7 +69,7 @@ To start, you can download final_paper_group06.pdf, which contains the full repo
 ## Analysis
 
 <div align="justify">
-For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. In summary:
+For the project, we had used an informed keyword search of the candidate's Facebook posts, in addition to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. In summary:
 
   - Economy and transport were the top-two mentioned categories, with fertility ranking third. 
   - For fertility issues, DPP's Taoyuan candidates ranked amongst the top three in terms of total number of posts and daily mentions, with KMT's New Taipei City candidate ranking the lowest in both. 
