@@ -82,7 +82,9 @@ For the project, we had used an informed keyword search of the candidate's Faceb
 
 <div align="justify">
 
-The project has provided insights into the discussion and proposed solutions put forth by the leading candidates of the six special municipalities in relation to the declining fertility issue faced by Taiwan. Despite the strategic importance of the declining fertility problem in Taiwan, we noted that the amount of mentions by candidates ranked lower than that of economy and transportation. Of which, childcare-related policies received the highest mention amongst the different fertility-related policies, which also reflects the long standing nature of the issues in Taiwan. The study has also provided additional insights to other factors that may affect how significant the issue is discussed by the various candidates, such as the role of the candidate (as the contender and incumbent), the prominence of the city during the elections (such as in the case of Taoyuan which was among the most discussed), as well as the other issues that may be discussed. We hope that the study can be useful to both (i) readers or organisations who are interested in the policies and solutions that could tackle the issue of declining fertility; (ii) readers who may be interested in understanding the social media strategies and campaigns in candidates in Taiwan; as well as (iii) students who are interested in using data tools for policy and social media analysis. 
+The project has provided insights into the discussion and proposed solutions put forth by the leading candidates of the six special municipalities in relation to the declining fertility issue faced by Taiwan. Despite the strategic importance of the declining fertility problem in Taiwan, we noted that the amount of mentions by candidates ranked lower than that of economy and transportation. Of which, childcare-related policies received the highest mention amongst the different fertility-related policies, which also reflects the long standing nature of the issues in Taiwan. 
+
+The study has also provided additional insights to other factors that may affect how significant the issue is discussed by the various candidates, such as the role of the candidate (as the contender and incumbent), the prominence of the city during the elections (such as in the case of Taoyuan which was among the most discussed), as well as the other issues that may be discussed. We hope that the study can be useful to both (i) readers or organisations who are interested in the policies and solutions that could tackle the issue of declining fertility; (ii) readers who may be interested in understanding the social media strategies and campaigns in candidates in Taiwan; as well as (iii) students who are interested in using data tools for policy and social media analysis. 
 </div>
 
 ## Contributors
@@ -91,7 +93,9 @@ The members of the project included Jasper, Kai, Ming and Elsie.
 
 ## Acknowledgments
 
-We will like to thank Professor Torrent for the guidance throughout the semester. 
+For the word cloud, we have also taken reference to the tuorial provided by NTNU (https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html) for our code to process the Chinese text, establish the word tokenization, stop word list and custom dictionary that we had compiled. 
+
+On this note, we will like to thank Professor Torrent for the guidance throughout the semester :)
 
 ## References
 
