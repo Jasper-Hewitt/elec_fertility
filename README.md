@@ -90,7 +90,7 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 
 ## References
 
-The references can be found in Section 7 of the final_paper_group06.
+The references can be found in Section 7 of the final_paper_group06.pdf.
 
 
 # elec_fertility
