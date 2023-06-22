@@ -94,7 +94,7 @@ The members of the project included Jasper, Kai, Ming and Elsie.
 
 ## Acknowledgments
 
-For the word cloud, we have also taken reference to the tuorial provided by NTNU (https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html) for our code to process the Chinese text, establish the word tokenization, stop word list and custom dictionary that we had compiled. 
+For the word cloud, we have also taken reference to the tutorial provided by NTNU (https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html) for our code to process the Chinese text, establish the word tokenization, stop word list and custom dictionary that we had compiled. 
 
 On this note, we will like to thank Professor Torrent for the guidance throughout the semester :)
 
