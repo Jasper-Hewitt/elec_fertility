@@ -71,7 +71,7 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 ## Analysis
 
 <div align="justify">
-[Describe your analysis methods and include any visualizations or graphics that you used to present your findings. Explain the insights that you gained from your analysis and how they relate to your research question or problem statement.]
+For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. The research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
 </div>
 
 ## Results
@@ -86,6 +86,8 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 
 ## Acknowledgments
 
+We will like to thank 
+
 [Thank any individuals or organizations who provided support or assistance during your project, including funding sources or data providers.]
 
 ## References
@@ -99,12 +101,6 @@ The references can be found in Section 7 of the final_paper_group06.pdf.
 all wisenews stuff is in wisenews.r
 
 all candidates stuff is in main_code.r
-
-
-## to do
-- clean up repository
-- make candidates posts plot over time
-- put plots into report 
 
 
 
