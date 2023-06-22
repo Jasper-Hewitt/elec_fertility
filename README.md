@@ -90,8 +90,7 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 
 ## References
 
-[List any references or resources that you used during your project, including data sources, analytical methods, and tools.]
-for tokenization and wordclouds: https://alvinntnu.github.io/NTNU_ENC2036_LECTURES/chinese-text-processing.html
+The references can be found in Section 7 of the final_paper_group06.
 
 
 # elec_fertility
