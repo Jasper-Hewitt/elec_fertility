@@ -20,7 +20,7 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 ## Getting Started
 
 <div align="justify">
-The full report can be found in final_paper_group06.pdf. In this Github, we have also included the relevant R files that we used for the (i) inital GPT feasbility test; (ii) main codes used for data analysis; and (iii) clean the news articles obtained through the wisenews platform. The repository also includes the data files (e.g. CSV, PDF and XLSX). Details are included the file structure.</div>
+The full report can be found in final_paper_group06.pdf. In this Github, we have also included the relevant R files that we used for the (i) inital GPT feasbility test; (ii) main codes used for data analysis; and (iii) clean the news articles obtained through the wisenews platform. The repository also includes the data files (e.g. CSV, PDF and XLSX). Details can be found in the file structure.</div>
 
 ## File Structure
 
@@ -69,13 +69,20 @@ The full report can be found in final_paper_group06.pdf. In this Github, we have
 ## Analysis
 
 <div align="justify">
-For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. The research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
+For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. The detailed research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
+
+  Summary
+  - Economy and transport 
+  - For fertility issues, DPP's Taoyuan candidates ranked amongst the top three in terms of total number of posts and daily mentions, with KMT's New Taipei City candidate ranking the lowest in both. 
+  - Childcare related policies was found to be of the highest mention among fertility-related issues, with candidates observed to use dedicated posts to highlight the policy achievements (by incumbents), as well as policy plans put forth (by incubments and contenders). 
+  
 </div>
 
 ## Results
 
 <div align="justify">
-[Provide a summary of your findings and conclusions, including any recommendations or implications for future research. Be sure to explain how your results address your research question or problem statement.]
+
+  [Provide a summary of your findings and conclusions, including any recommendations or implications for future research. Be sure to explain how your results address your research question or problem statement.]
 </div>
 
 ## Contributors
