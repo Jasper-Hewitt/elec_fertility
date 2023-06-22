@@ -21,8 +21,7 @@ Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after m
 ## Getting Started
 
 <div align="justify">
-[Provide instructions on how to get started with your project, including any necessary software or data. Include installation instructions and any prerequisites or dependencies that are required.]
-</div>
+The full report can be found in final_paper_group06.pdf. In this Github, we have also included the relevant R files that we used for the (i) inital GPT feasbility test; (ii) main codes used for data analysis; and (iii) clean the news articles obtained through the wisenews platform. The repository also includes the data files (e.g. CSV, PDF and XLSX). Details are included the file structure.</div>
 
 ## File Structure
 
@@ -82,13 +81,11 @@ For the project, we had used an informed keyword search of the candidate's Faceb
 
 ## Contributors
 
-[List the contributors to your project and describe their roles and responsibilities.]
+The members of the project included Jasper, Kai, Ming and Elsie. 
 
 ## Acknowledgments
 
-We will like to thank 
-
-[Thank any individuals or organizations who provided support or assistance during your project, including funding sources or data providers.]
+We will like to thank Professor Torrent for the guidance throughout the semester. 
 
 ## References
 
