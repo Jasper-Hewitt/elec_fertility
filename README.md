@@ -12,7 +12,7 @@ This project seeks to ascertain how the issue of low fertility rates factored in
 - What policy ideas did they propose to resolve the issue?
 - How does this compare to discussions and perceptions in the media?
   
-Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after manually labelling 300 posts we found that ChatGPT’s accuracy is not high enough. Therefore, we adjusted our methodology to informed keyword searches in addition to a word cloud. We have included the details of both in the repository.   
+Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after manually labelling 300 posts we found that ChatGPT’s accuracy is not high enough. Therefore, we adjusted our methodology to informed keyword searches in addition to a word cloud. Details of both are included in the report and repository.
 
 
 </div>
