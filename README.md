@@ -4,16 +4,15 @@
 
 <div align="justify">
   
-In 2022, Taiwan recorded its lowest fertility rate of 0.87. This is expected to drop even further and Taiwan’s fertility rate is set to become the world’s lowest by 2035 (Kao and Liu, 2022). The issue has also become one of the hot topics during the mayoral election last year. The 2022 mayoral candidates have put forward various strategies and policy proposals to tackle the low fertility rate problem. 
-This project seeks to ascertain how the issue of low fertility rates factored into the 2022 local elections. Moreover, we aim to uncover the underlying factors that shaped the candidates' outlooks on low fertility rates. To this end, we ask the following three research questions.
+In 2022, Taiwan registered a record low fertility rate of 0.87. It is projected that by 2035, Taiwan will have the lowest fertility rate in the world (Tzu-Ti, H., 2022). The issue has also become one of the hot topics during the mayoral election last year. The 2022 mayoral candidates have put forward various strategies and policy proposals to tackle the issue.
+ 
+This project seeks to ascertain how the issue of low fertility rates factored into the 2022 local elections. Of which, we aim to better understand the candidates' outlooks relating to the issue and their proposed solutions to how Taiwan can address the decreasing fertility problem. Focusing on Taiwan’s six special municipalities (i.e. Taipei, New Taipei, Taoyuan, Taichung, Tainan, and Kaohsiung) , we ask the following three research questions.
 
 - How frequently did the candidates mention the issue on Facebook?
 - What policy ideas did they propose to resolve the issue?
 - How does this compare to discussions and perceptions in the media?
   
-We focus on Taiwan’s six special municipalities: Taipei, New Taipei, Taoyuan, Taichung, Tainan, and Kaohsiung. 
-
-Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after manually labelling 300 posts we found that ChatGPT’s accuracy is not high enough. Therefore, we adjusted our methodology to informed keyword searches in addition to a word cloud. 
+Initially, we planned to employ ChatGPT (3.5) for our analysis. However, after manually labelling 300 posts we found that ChatGPT’s accuracy is not high enough. Therefore, we adjusted our methodology to informed keyword searches in addition to a word cloud. We have included the details of both in the repository.   
 
 
 </div>
