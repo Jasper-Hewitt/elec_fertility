@@ -71,6 +71,7 @@ The full report can be found in final_paper_group06.pdf. In this Github, we have
 <div align="justify">
 For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. The detailed research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
   
+
 In summary:
 
   - Economy and transport were the top-two mentioned categories, with fertility ranking third. 
