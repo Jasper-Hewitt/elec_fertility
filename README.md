@@ -69,16 +69,14 @@ The full report can be found in final_paper_group06.pdf. In this Github, we have
 ## Analysis
 
 <div align="justify">
-For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. The detailed research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
-  
-
-In summary:
+For the project, we had used an informed keyword search of the candidate's Facebook posts, in addtion to a word cloud of the candidate posts and news articles. We have also supplemented our analysis with the qualitative data extracted from the Facebook accounts of the candidates. In summary:
 
   - Economy and transport were the top-two mentioned categories, with fertility ranking third. 
   - For fertility issues, DPP's Taoyuan candidates ranked amongst the top three in terms of total number of posts and daily mentions, with KMT's New Taipei City candidate ranking the lowest in both. 
   - Childcare related policies was found to be of the highest mention among fertility-related issues, with candidates observed to use dedicated posts to highlight the policy achievements (by incumbents), as well as policy plans put forth (by incubments and contenders).
   - Comparing between media and candidate posts, the media mostly ocnsidered the impact of the declining ferility rate on Taiwan's society, while candidates tend to focus more on the policy achievements or policy proposals that seek to address the declining fertiltiy problem. 
-  
+
+The detailed research analysis can be found in Section 3.1 to 3.3 of final_paper_group06.pdf. 
 </div>
 
 ## Results
